@@ -1,0 +1,20 @@
+20.04.09 목
+
+새로 알 게 된 것
+1. TextView의 장평, 자간, 줄 간격 설정하기 (https://itpangpang.xyz/325)
+    - activity_sign 참고
+2. 안드로이드 앱의 기본 background color는 #eeeeee이다. (최근 업데이트 버전 #fafafa) -> 여기서는 후자인듯
+    - ?android:colorBackground를 이용하여 색을 알 수 있음.
+3. <item name="windowActionBar">false</item>
+   <item name="windowNoTitle">true</item>
+   을 추가하여, NoActionBar의 속성을 AppTheme에도 부여할 수 있음.
+   물론, android:theme="@style/Theme.AppCompat.NoActionBar" 를 사용해도 됨
+4. android:contentInsetStart="0dp"
+   app:contentInsetStart="0dp"
+   혹시 나중에 toolbar에 마진 문제 생기면 위 코드 작성하여 해결해보기
+
+적용해본 기술
+1. drawable에서 source만들어서 editText, Button의 디자인 설정
+2. strings.xml에서 글자의 bold underline 주기
+3. styles.xml에서 기본 글자 색 및 editText 힌트 색 지정
+4. Toolbar custom

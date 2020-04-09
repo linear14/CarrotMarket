@@ -1,0 +1,2 @@
+rootProject.name='carrotMarket'
+include ':app'
