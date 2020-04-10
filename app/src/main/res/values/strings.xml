@@ -6,9 +6,11 @@
     <string name="description">당근마켓은 휴대폰 번호로 가입해요. 번호는 <b>안전하게 보관되며</b> 어디에도 공개되지 않아요.</string>
     <string name="phone_number_input">휴대폰 번호를 입력해주세요</string>
     <string name="send_verify_message_button"><b>인증문자 받기</b></string>
+    <string name="resend_verify_message_button"><b>인증문자 다시 받기</b></string>
     <string name="verify_number_input">인증번호를 입력해주세요</string>
     <string name="term_text"><u>이용약관</u></string>
     <string name="mit">및</string>
     <string name="rule_personal_info_text"><u>개인정보취급방침</u></string>
     <string name="agree_and_start_button"><b>동의하고 시작하기</b></string>
+    <string name="description_carrot_image">carrot image</string>
 </resources>

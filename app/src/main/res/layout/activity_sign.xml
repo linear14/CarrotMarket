@@ -47,7 +47,8 @@
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                android:contentDescription="@string/description_carrot_image"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -68,9 +69,11 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/decorate_input_default"
             android:hint="@string/phone_number_input"
+            android:inputType="phone"
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
             android:textSize="16sp"
+            android:maxLength="11"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_layout" />
@@ -80,10 +83,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/decorate_button_default"
+            android:background="@drawable/decorate_button_inactive"
             android:text="@string/send_verify_message_button"
             android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/phone_number_input" />
@@ -98,6 +102,7 @@
             android:paddingHorizontal="16dp"
             android:paddingVertical="12dp"
             android:textSize="16sp"
+            android:maxLength="4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/send_verify_message_button" />
@@ -148,10 +153,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:background="@drawable/decorate_button_default"
+            android:background="@drawable/decorate_button_inactive"
             android:text="@string/agree_and_start_button"
             android:textColor="@android:color/white"
             android:textSize="16sp"
+            android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/term_layout" />

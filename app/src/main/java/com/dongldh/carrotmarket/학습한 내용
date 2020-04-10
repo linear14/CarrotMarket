@@ -18,3 +18,16 @@
 2. strings.xml에서 글자의 bold underline 주기
 3. styles.xml에서 기본 글자 색 및 editText 힌트 색 지정
 4. Toolbar custom
+
+
+20.04.10 금
+
+새로 알 게 된 것
+1. send_verify_message_button.setBackgroundResource(R.drawable.decorate_button_active) --> background 바꾸는 방법
+
+
+적용해본 기술
+1. Random 함수 사용해보기
+2. SringBuilder 사용해보기
+3. android:enabled="false" --> 뷰를 사용할 수 없음
+4. addTextChangedListener를 이용하여, 특정 글자 수를 넘었을 경우 뷰에 이벤트를 주는 상황 구현 (SignActivity)

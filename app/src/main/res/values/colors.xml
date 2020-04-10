@@ -6,4 +6,5 @@
     <color name="colorHint">#cfcfcf</color>
     <color name="colorDefaultBackground">#fafafa</color>
     <color name="colorDarkBackground">#afafaf</color>
+    <color name="colorButtonActive">#ED6A41</color>
 </resources>
