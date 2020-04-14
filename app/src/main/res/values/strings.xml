@@ -13,4 +13,7 @@
     <string name="rule_personal_info_text"><u>개인정보취급방침</u></string>
     <string name="agree_and_start_button"><b>동의하고 시작하기</b></string>
     <string name="description_carrot_image">carrot image</string>
+
+    <!-- StartActivity -->
+    <string name="select_location_button"><b>내 동네 설정하고 시작하기</b></string>
 </resources>
