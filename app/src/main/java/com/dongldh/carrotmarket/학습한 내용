@@ -31,3 +31,26 @@
 2. StringBuilder 사용해보기
 3. android:enabled="false" --> 뷰를 사용할 수 없음
 4. addTextChangedListener를 이용하여, 특정 글자 수를 넘었을 경우 뷰에 이벤트를 주는 상황 구현 (SignActivity)
+
+
+20.04.14 화
+
+새로 공부한 것
+1. Glide 라이브러리를 이용하여 gif 이미지를 로드
+
+
+20.04.15 수
+
+이슈
+1. 지오코딩 실패 ㅠㅠ.. 지역 데이터(Location) sqlite DB에 넣어두었다.
+https://developers.google.com/maps/documentation/geocoding/start 지오코딩
+https://bitsoul.tistory.com/135
+
+새로 공부한 것
+1. 액티비티에서 EditText 넣을 시, 자동으로 키보드 열리지 않게 하려면 stateHidden.
+    키보드가 뷰를 밀지 않게 하려면 adjustPan 속성을 manifests에 부여한다. (각 액티비티마다)
+    android:windowSoftInputMode="adjustPan|stateHidden"
+
+적용해본 기술
+1. SQLite를 이용하여, 지역 정보를 추가했다.
+

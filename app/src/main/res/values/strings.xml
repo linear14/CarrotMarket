@@ -16,4 +16,9 @@
 
     <!-- StartActivity -->
     <string name="select_location_button"><b>내 동네 설정하고 시작하기</b></string>
+
+    <!-- SelectLocationActivity -->
+    <string name="search_input">내 동네 이름으로 검색</string>
+    <string name="find_location_button"><b>현재 위치로 찾기</b></string>
+    <string name="no_result_text">검색 결과가 없습니다.\n동네 이름을 다시 확인해주세요!</string>
 </resources>

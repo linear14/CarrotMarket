@@ -9,17 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartActivity">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="api key"/>
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
+
+        <activity android:name=".SelectLocationActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignActivity">
+        <activity android:name=".StartActivity">
 
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SignActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
