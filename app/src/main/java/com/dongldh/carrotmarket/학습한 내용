@@ -54,3 +54,9 @@ https://bitsoul.tistory.com/135
 적용해본 기술
 1. SQLite를 이용하여, 지역 정보를 추가했다.
 
+
+20.04.16 목
+
+적용해본 기술
+1. RecyclerView 사용하기 및 Adapter 생성
+2. Comparator를 통해 DB의 데이터를 오름차순 진행
