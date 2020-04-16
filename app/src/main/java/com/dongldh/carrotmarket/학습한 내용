@@ -57,6 +57,9 @@ https://bitsoul.tistory.com/135
 
 20.04.16 목
 
+새로 해본 것
+1. 검색 기능 구현! 원래 이렇게 하는지는 모르겠지만, 나름대로 구현을 해봤음 (onTextChangedListener사용)
+
 적용해본 기술
 1. RecyclerView 사용하기 및 Adapter 생성
 2. Comparator를 통해 DB의 데이터를 오름차순 진행
