@@ -21,4 +21,10 @@
     <string name="search_input">내 동네 이름으로 검색</string>
     <string name="find_location_button"><b>현재 위치로 찾기</b></string>
     <string name="no_result_text">검색 결과가 없습니다.\n동네 이름을 다시 확인해주세요!</string>
+
+    <!-- ProfileActivity -->
+    <string name="profile_toolbar">프로필 입력</string>
+    <string name="next_text">다음</string>
+    <string name="nickname_input">닉네임을 입력해주세요.</string>
+    <string name="advice_text">당근마켓은 신뢰를 기반으로 하는 지역 커뮤니티입니다.\n프로필 사진과 닉네임을 입력해주세요.</string>
 </resources>

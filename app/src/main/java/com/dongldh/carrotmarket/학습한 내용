@@ -63,3 +63,8 @@ https://bitsoul.tistory.com/135
 적용해본 기술
 1. RecyclerView 사용하기 및 Adapter 생성
 2. Comparator를 통해 DB의 데이터를 오름차순 진행
+
+20.04.17 금
+
+새로 알게 된 것
+1. EditText에서 backgroundTint 속성을 부여하면 밑줄 색이 바뀌지만, api21레벨 이상에서만 지원한다.
