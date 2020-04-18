@@ -27,4 +27,8 @@
     <string name="next_text">다음</string>
     <string name="nickname_input">닉네임을 입력해주세요.</string>
     <string name="advice_text">당근마켓은 신뢰를 기반으로 하는 지역 커뮤니티입니다.\n프로필 사진과 닉네임을 입력해주세요.</string>
+
+    <!-- MainActivity -->
+    <string name="location_auth_advice_text">xx님, xx 근처 xx명의\n이웃과 중고거래를 시작해보세요. :)</string>
+    <string name="location_auth_button"><b>동네인증하고 시작하기</b></string>
 </resources>

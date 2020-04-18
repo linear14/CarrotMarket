@@ -31,13 +31,15 @@
         </activity>
         <activity android:name=".StartActivity"></activity>
         <activity android:name=".SignActivity" >
+
+        </activity>
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
