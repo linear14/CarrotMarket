@@ -75,3 +75,4 @@ https://bitsoul.tistory.com/135
 1. firebase 회원 등록^^!! 비밀번호는 무조건 6자리 이상이어야지 오류 안난다. (ProfileActivity 참고)
     FirebaseAuth 객체를 불러오고 인스턴스를 만들어준다.
     그 이후 createUserWithEmailAndPassword를 이용해서 작업!
+    signInWithEmailAndPassword 통해서 로그인 작업도 가능

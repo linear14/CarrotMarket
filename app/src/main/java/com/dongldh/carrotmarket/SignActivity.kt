@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign.*
 import java.util.*
 
@@ -16,6 +17,8 @@ class SignActivity : AppCompatActivity(), View.OnClickListener {
 
     // 생성된 인증번호
     var verifyNumber: String = ""
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,14 +81,27 @@ class SignActivity : AppCompatActivity(), View.OnClickListener {
             agree_and_start_button -> {
                 if(isClickVerifyMessageButton && verify_number_input.text.toString().length == 4) {
                     if(verifyNumber == verify_number_input.text.toString()) {
+
                         // Login 검증 (이미 회원가입이 되어 있을 경우와 아닌경우)
+                        auth = FirebaseAuth.getInstance()
+                        val phoneNumber = phone_number_input.text.toString()
+                        val email = "${phoneNumber}@test.com"
+                        val password = "123456"
 
-                        // 회원가입이 되어있지 않은 경우
-                        val intent = Intent(this@SignActivity, ProfileActivity::class.java)
-                        intent.putExtra("phoneNumber", phone_number_input.text.toString())
-                        startActivity(intent)
-
-                        Toast.makeText(this, "로그인 성공 or 회원가입 성공", Toast.LENGTH_SHORT).show()
+                        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
+                            if(task.isSuccessful) {
+                                // 로그인이 성공한 경우(이미 핸드폰 번호가 존재하는 경우) -> 정상적으로 MainActivity로 이동
+                                Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@SignActivity, MainActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                // 회원가입이 되어있지 않은 경우(등록되지 않은 핸드폰 번호) -> ProfileActivity로 이동해서 닉네임 설정하자.
+                                Toast.makeText(this, "회원 등록 창으로 이동합니다.", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@SignActivity, ProfileActivity::class.java)
+                                intent.putExtra("phoneNumber", phoneNumber)
+                                startActivity(intent)
+                            }
+                        }
                     } else {
                         Toast.makeText(this, "인증번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
                     }
