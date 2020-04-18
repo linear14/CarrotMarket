@@ -68,3 +68,10 @@ https://bitsoul.tistory.com/135
 
 새로 알게 된 것
 1. EditText에서 backgroundTint 속성을 부여하면 밑줄 색이 바뀌지만, api21레벨 이상에서만 지원한다.
+
+20.04.18 토
+
+새로 알게 된 것
+1. firebase 회원 등록^^!! 비밀번호는 무조건 6자리 이상이어야지 오류 안난다. (ProfileActivity 참고)
+    FirebaseAuth 객체를 불러오고 인스턴스를 만들어준다.
+    그 이후 createUserWithEmailAndPassword를 이용해서 작업!

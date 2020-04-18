@@ -78,7 +78,12 @@ class SignActivity : AppCompatActivity(), View.OnClickListener {
             agree_and_start_button -> {
                 if(isClickVerifyMessageButton && verify_number_input.text.toString().length == 4) {
                     if(verifyNumber == verify_number_input.text.toString()) {
-                        // Login 검증하는 서비스로 이동
+                        // Login 검증 (이미 회원가입이 되어 있을 경우와 아닌경우)
+
+                        // 회원가입이 되어있지 않은 경우
+                        val intent = Intent(this@SignActivity, ProfileActivity::class.java)
+                        intent.putExtra("phoneNumber", phone_number_input.text.toString())
+                        startActivity(intent)
 
                         Toast.makeText(this, "로그인 성공 or 회원가입 성공", Toast.LENGTH_SHORT).show()
                     } else {
