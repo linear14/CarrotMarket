@@ -38,4 +38,7 @@
     <string name="write_navigation">글쓰기</string>
     <string name="chat_navigation">채팅</string>
     <string name="my_carrot_navigation">나의 당근</string>
+
+    <!-- CategoryFragment -->
+    <string name="category">카테고리</string>
 </resources>

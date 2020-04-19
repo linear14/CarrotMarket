@@ -86,3 +86,10 @@ https://chocorolls.tistory.com/47 여기서 완전 round한 이미지 뷰 만드
 2. bottomNavigation 사용.
     - background 색을 바꾸는방법, 클릭시 글자 색 바뀌도록 하는 방법
         (decorate_bottom_navigation.xml 및 activity_main.xml 참고)
+
+적용한 기술
+1. Navigtion 버튼 눌렀을 경우에 따라 Fragment 화면 전환
+(onNavigationItemSelected)
+(BottomNavigationView.OnNavigationItemSelectedListener)
+bottom_navigation.selectedItemId = R.id.action_home 이런식으로 selectedItemId 를 사용하여 초기 fragment 설정이 가능
+onNavigationItemSelected에서 return true를 해주어야 navigation 선택 되었음이 표기됨. (뭔말인지 모르겠으면 false 리턴으로 다시 해보자)
