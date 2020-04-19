@@ -76,3 +76,10 @@ https://bitsoul.tistory.com/135
     FirebaseAuth 객체를 불러오고 인스턴스를 만들어준다.
     그 이후 createUserWithEmailAndPassword를 이용해서 작업!
     signInWithEmailAndPassword 통해서 로그인 작업도 가능
+
+20.04.19 일
+
+https://chocorolls.tistory.com/47 여기서 완전 round한 이미지 뷰 만드는 방법이 있으므로 참고하자
+
+새로 학습한 내용
+1. 이미지뷰 코너 라운드 설정. (추후에 다시 보긴 해야 됨)
