@@ -28,7 +28,14 @@
     <string name="nickname_input">닉네임을 입력해주세요.</string>
     <string name="advice_text">당근마켓은 신뢰를 기반으로 하는 지역 커뮤니티입니다.\n프로필 사진과 닉네임을 입력해주세요.</string>
 
-    <!-- MainActivity -->
+    <!-- FragmentMain -->
     <string name="location_auth_advice_text">xx님, xx 근처 xx명의\n이웃과 중고거래를 시작해보세요. :)</string>
     <string name="location_auth_button"><b>동네인증하고 시작하기</b></string>
+
+    <!-- menu_bottom_navigation.xml -->
+    <string name="home_navigation">홈</string>
+    <string name="category_navigation">카테고리</string>
+    <string name="write_navigation">글쓰기</string>
+    <string name="chat_navigation">채팅</string>
+    <string name="my_carrot_navigation">나의 당근</string>
 </resources>

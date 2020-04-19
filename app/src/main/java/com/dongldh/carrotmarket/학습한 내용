@@ -83,3 +83,6 @@ https://chocorolls.tistory.com/47 여기서 완전 round한 이미지 뷰 만드
 
 새로 학습한 내용
 1. 이미지뷰 코너 라운드 설정. (추후에 다시 보긴 해야 됨)
+2. bottomNavigation 사용.
+    - background 색을 바꾸는방법, 클릭시 글자 색 바뀌도록 하는 방법
+        (decorate_bottom_navigation.xml 및 activity_main.xml 참고)
