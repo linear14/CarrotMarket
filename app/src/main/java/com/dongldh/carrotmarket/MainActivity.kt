@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import com.dongldh.carrotmarket.Dialog.WriteBottomSheetDialog
 import com.dongldh.carrotmarket.MainFragment.CategoryFragment
 import com.dongldh.carrotmarket.MainFragment.ChatFragment
 import com.dongldh.carrotmarket.MainFragment.HomeFragment
@@ -55,8 +56,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.action_write -> {
+                val dialog = WriteBottomSheetDialog()
+                dialog.show(supportFragmentManager, "dialog_bottom")
 
-                return true
+                return false
             }
 
             R.id.action_chat -> {

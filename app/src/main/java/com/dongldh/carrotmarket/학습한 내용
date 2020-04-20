@@ -93,3 +93,9 @@ https://chocorolls.tistory.com/47 여기서 완전 round한 이미지 뷰 만드
 (BottomNavigationView.OnNavigationItemSelectedListener)
 bottom_navigation.selectedItemId = R.id.action_home 이런식으로 selectedItemId 를 사용하여 초기 fragment 설정이 가능
 onNavigationItemSelected에서 return true를 해주어야 navigation 선택 되었음이 표기됨. (뭔말인지 모르겠으면 false 리턴으로 다시 해보자)
+
+20.04.20 월
+
+새로 학습한 내용
+1. BottomSheetDialogFragment : 바닥에서 올라오는 다이얼로그 처음 만들어봤어용
+https://www.youtube.com/watch?v=IfpRL2K1hJk
