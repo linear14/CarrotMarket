@@ -1,3 +1,12 @@
+여건상 구현할 수 없었던 것들
+1. SelectLocationActivity -> 위치정보에 따른 주변 지역 자동 선택 기능
+2. SignActivity -> 핸드폰 번호 인증
+
+아직 안 한 것
+1. ProfileActivity -> 회원 등록이 됐을 경우 ! 지역, 사진, 아이디 등을 firebase에 담을 수 있도록
+
+
+
 20.04.09 목
 
 새로 알 게 된 것
@@ -109,3 +118,4 @@ https://www.youtube.com/watch?v=IfpRL2K1hJk
 
 적용해 본 기술
 1. SharedPreference 등록 (android:name=".App"을 application 항목에 꼭 등록해야됨..^^!!)
+2. TedPermission을 사용해서 위치정보 수집 동의 얻어내려고 했음.
