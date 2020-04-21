@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import com.dongldh.carrotmarket.Dialog.WriteBottomSheetDialog
-import com.dongldh.carrotmarket.MainFragment.CategoryFragment
-import com.dongldh.carrotmarket.MainFragment.ChatFragment
-import com.dongldh.carrotmarket.MainFragment.HomeFragment
-import com.dongldh.carrotmarket.MainFragment.MyCarrotFragment
+import com.dongldh.carrotmarket.dialog.WriteBottomSheetDialog
+import com.dongldh.carrotmarket.main_fragment.CategoryFragment
+import com.dongldh.carrotmarket.main_fragment.ChatFragment
+import com.dongldh.carrotmarket.main_fragment.HomeFragment
+import com.dongldh.carrotmarket.main_fragment.MyCarrotFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {

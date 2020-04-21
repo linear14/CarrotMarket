@@ -1,4 +1,4 @@
-package com.dongldh.carrotmarket.Database
+package com.dongldh.carrotmarket.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

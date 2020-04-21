@@ -104,5 +104,8 @@ https://www.youtube.com/watch?v=IfpRL2K1hJk
 
 20.04.21 화
 
+새로 알 게 된 것
+1. package name을 구성할 때 all lowercase 혹은 underscore를 이용한 분리
+
 적용해 본 기술
 1. SharedPreference 등록

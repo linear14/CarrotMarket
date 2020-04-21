@@ -1,7 +1,7 @@
 package com.dongldh.carrotmarket
 
 import android.app.Application
-import com.dongldh.carrotmarket.SharedPreference.SharedPreference
+import com.dongldh.carrotmarket.shared_preference.SharedPreference
 
 class App : Application() {
 

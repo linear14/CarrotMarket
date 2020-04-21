@@ -4,17 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.dongldh.carrotmarket.Database.DBHelper
-import com.dongldh.carrotmarket.Database.DataLocation
-import com.dongldh.carrotmarket.RecyclerViewAdapter.ResultLocationAdapter
+import com.dongldh.carrotmarket.database.DBHelper
+import com.dongldh.carrotmarket.database.DataLocation
+import com.dongldh.carrotmarket.recycler_view_adapter.ResultLocationAdapter
 import kotlinx.android.synthetic.main.activity_select_location.*
-import kotlinx.android.synthetic.main.item_select_location.view.*
 
 class SelectLocationActivity : AppCompatActivity() {
 

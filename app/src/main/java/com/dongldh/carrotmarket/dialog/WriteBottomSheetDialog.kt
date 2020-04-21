@@ -1,15 +1,15 @@
-package com.dongldh.carrotmarket.MainFragment
+package com.dongldh.carrotmarket.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.dongldh.carrotmarket.R
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ChatFragment: Fragment() {
+class WriteBottomSheetDialog: BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_chat, container, false)
+        val view = inflater.inflate(R.layout.dialog_write_bottom_sheet, container, false)
         return view
     }
 }

@@ -1,10 +1,10 @@
-package com.dongldh.carrotmarket.RecyclerViewAdapter
+package com.dongldh.carrotmarket.recycler_view_adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dongldh.carrotmarket.Database.DataLocation
+import com.dongldh.carrotmarket.database.DataLocation
 import com.dongldh.carrotmarket.R
 import kotlinx.android.synthetic.main.item_select_location.view.*
 

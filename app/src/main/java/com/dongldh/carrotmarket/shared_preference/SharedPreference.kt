@@ -1,4 +1,4 @@
-package com.dongldh.carrotmarket.SharedPreference
+package com.dongldh.carrotmarket.shared_preference
 
 import android.content.Context
 import android.content.SharedPreferences
