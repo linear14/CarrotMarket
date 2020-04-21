@@ -47,4 +47,9 @@
     <string name="used_transaction_detail">중고 물건을 판매할 수 있어요</string>
     <string name="community_promotion"><b>동네홍보</b></string>
     <string name="community_promotion_detail">업체소개, 부동산, 농수산물 등을 올릴 수 있어요</string>
+
+    <!-- SuggestLoginDialog -->
+    <string name="suggest_login_text"><b>가입하고 xx동\n중고 상품을 구경하세요!</b></string>
+    <string name="login_button"><b>로그인하기</b></string>
+    <string name="no_login_text">둘러보기</string>
 </resources>

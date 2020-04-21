@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/decorate_imageview_corner_rounding"
+    android:padding="24dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/ic_launcher"/>
+    
+    <TextView
+        android:id="@+id/no_login_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/no_login_text"
+        android:textColor="@color/colorDarkBackground"
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:id="@+id/suggest_login_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="@string/suggest_login_text"
+        android:textSize="20sp"
+        android:lineSpacingMultiplier="1.4"/>
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/suggest_login_text"
+        android:layout_marginTop="24dp"
+        android:text="@string/login_button"
+        android:textSize="20sp"
+        android:textColor="@color/colorButtonActive"
+        android:background="@drawable/decorate_button_reverse" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
