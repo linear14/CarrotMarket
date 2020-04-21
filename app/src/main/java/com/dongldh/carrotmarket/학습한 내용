@@ -108,4 +108,4 @@ https://www.youtube.com/watch?v=IfpRL2K1hJk
 1. package name을 구성할 때 all lowercase 혹은 underscore를 이용한 분리
 
 적용해 본 기술
-1. SharedPreference 등록
+1. SharedPreference 등록 (android:name=".App"을 application 항목에 꼭 등록해야됨..^^!!)
