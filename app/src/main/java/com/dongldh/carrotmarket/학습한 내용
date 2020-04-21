@@ -99,3 +99,10 @@ onNavigationItemSelected에서 return true를 해주어야 navigation 선택 되
 새로 학습한 내용
 1. BottomSheetDialogFragment : 바닥에서 올라오는 다이얼로그 처음 만들어봤어용
 https://www.youtube.com/watch?v=IfpRL2K1hJk
+
+
+
+20.04.21 화
+
+적용해 본 기술
+1. SharedPreference 등록
