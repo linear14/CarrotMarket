@@ -15,6 +15,7 @@ class StartActivity : AppCompatActivity() {
         if(App.preference.location != null) {
             val intent = Intent(this@StartActivity, MainActivity::class.java)
             startActivity(intent)
+            finish()
         } else {
             setContentView(R.layout.activity_start)
 
@@ -24,6 +25,7 @@ class StartActivity : AppCompatActivity() {
             select_location_button.setOnClickListener {
                 val intent = Intent(this@StartActivity, SelectLocationActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.dongldh.carrotmarket.dialog.WriteBottomSheetDialog
 import com.dongldh.carrotmarket.main_fragment.CategoryFragment
 import com.dongldh.carrotmarket.main_fragment.ChatFragment
@@ -90,5 +91,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
         }
         return false
+    }
+
+    // 뒤로가기 버튼 눌렀을 경우
+    var currentTime = System.currentTimeMillis()
+    override fun onBackPressed() {
+        if(System.currentTimeMillis() - currentTime > 2000) {
+            currentTime = System.currentTimeMillis()
+            Toast.makeText(this, "'뒤로'버튼 한 번 더 누르면 종료", Toast.LENGTH_SHORT).show()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

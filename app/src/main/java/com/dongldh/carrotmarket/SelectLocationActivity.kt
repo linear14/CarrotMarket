@@ -136,6 +136,7 @@ class SelectLocationActivity : AppCompatActivity() {
                 App.preference.location = item.name
                 val intent = Intent(this@SelectLocationActivity, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
     }
