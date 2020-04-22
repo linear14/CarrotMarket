@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+
         bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.selectedItemId = R.id.action_home
     }
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager.beginTransaction().replace(R.id.main_content, homeFragment)
                     .commit()
 
-                title_text.text = "내 동네"
+                title_text.text = App.preference.location
                 selected_location_image.visibility = View.VISIBLE
                 search_image.visibility = View.VISIBLE
                 location_setting_image.visibility = View.VISIBLE

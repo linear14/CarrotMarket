@@ -1,21 +1,23 @@
 package com.dongldh.carrotmarket
 
 import android.Manifest
-import android.content.pm.PackageManager
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dongldh.carrotmarket.database.DBHelper
 import com.dongldh.carrotmarket.database.DataLocation
-import com.dongldh.carrotmarket.recycler_view_adapter.ResultLocationAdapter
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_select_location.*
+import kotlinx.android.synthetic.main.item_select_location.view.*
 import java.util.ArrayList
 
 class SelectLocationActivity : AppCompatActivity() {
@@ -109,5 +111,32 @@ class SelectLocationActivity : AppCompatActivity() {
 
         result_recycler.layoutManager = LinearLayoutManager(this)
         result_recycler.adapter = ResultLocationAdapter(locationList)
+    }
+
+    // Adapter 설정
+    class ResultLocationViewHolder(view: View): RecyclerView.ViewHolder(view) {
+        val location = view.location_text
+    }
+
+    inner class ResultLocationAdapter(val list: MutableList<DataLocation>): RecyclerView.Adapter<ResultLocationViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultLocationViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            return ResultLocationViewHolder(layoutInflater.inflate(R.layout.item_select_location, parent, false))
+        }
+
+        override fun getItemCount(): Int {
+            return list.size
+        }
+
+        override fun onBindViewHolder(holder: ResultLocationViewHolder, position: Int) {
+            val item = list[position]
+
+            holder.location.text = item.name
+            holder.itemView.setOnClickListener {
+                App.preference.location = item.name
+                val intent = Intent(this@SelectLocationActivity, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }
