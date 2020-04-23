@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.selectedItemId = R.id.action_home
 
+        // 만약 세션 유지 된 계정이 존재하지 않는다면 Dialog를 띄워서 로그인 / 회원가입을 권유한다.
         auth = FirebaseAuth.getInstance()
         if(auth!!.currentUser == null) {
             val dialog = SuggestLoginDialog()

@@ -5,6 +5,9 @@
 아직 안 한 것
 1. ProfileActivity -> 회원 등록이 됐을 경우 ! 지역, 사진, 아이디 등을 firebase에 담을 수 있도록
 
+이슈
+1. ProfileActivity 에서 MainActivity로 넘어갈 때 왜 백스택에서 정보가 사라지지 않지?
+
 
 
 20.04.09 목
@@ -129,3 +132,6 @@ https://www.youtube.com/watch?v=IfpRL2K1hJk
 1. 유저정보 firebase를 통해 가져오기 (FirebaseAuth의 getCurrentUser메소드)
     (.getDisplayName(), .getEmail() 등 추가로 사용 가능)
     (https://nittaku.tistory.com/17)
+2. 인텐트 사용시 백스택 정리 (https://stackoverflow.com/questions/5794506/android-clear-the-back-stack)
+    모든 백스택 액티비티/프래그먼트를 지워버리는 상황 시 사용
+3. manifests에서 android:noHistory="true" 속성을 지정하면 화면 전환시 백스택에 남지 않는다. (default값은 false인가보다)
