@@ -119,3 +119,13 @@ https://www.youtube.com/watch?v=IfpRL2K1hJk
 적용해 본 기술
 1. SharedPreference 등록 (android:name=".App"을 application 항목에 꼭 등록해야됨..^^!!)
 2. TedPermission을 사용해서 위치정보 수집 동의 얻어내려고 했음.
+
+20.04.22 수
+적용해 본 기술
+1. 뒤로가기 두 번 눌러 앱 종료
+
+20.04.23 목
+새로 배운 것
+1. 유저정보 firebase를 통해 가져오기 (FirebaseAuth의 getCurrentUser메소드)
+    (.getDisplayName(), .getEmail() 등 추가로 사용 가능)
+    (https://nittaku.tistory.com/17)

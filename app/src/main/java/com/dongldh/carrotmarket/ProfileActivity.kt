@@ -37,8 +37,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                     if (task.isSuccessful) {
                         // 회원가입 성공
                         Toast.makeText(this, "회원가입 완료!", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@ProfileActivity, MainActivity::class.java)
-                        startActivity(intent)
+
+                        // 회원가입 된 아이디로 로그인
+                        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                val intent = Intent(this@ProfileActivity, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
 
                         // ---------- user 개인정보에 사진과 닉네임, 지역 설정 하는 것 구현해야 함 ----------
                         val todo = "로그 찍어둘테니 일해라 동현아"
