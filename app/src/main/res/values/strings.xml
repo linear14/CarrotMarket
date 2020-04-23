@@ -42,6 +42,17 @@
     <!-- CategoryFragment -->
     <string name="category">카테고리</string>
 
+    <!-- MyCarrotFragment -->
+    <string name="location_setting_text">내 동네 설정</string>
+    <string name="location_certification_text">동네 인증하기</string>
+    <string name="keyword_alarm_text">키워드 알림</string>
+    <string name="collect_all_text">모아보기</string>
+    <string name="invite_friend_text">친구초대</string>
+    <string name="share_carrot_market_text">당근마켓 공유</string>
+    <string name="notice_text">공지사항</string>
+    <string name="user_center_text">고객센터</string>
+    <string name="app_setting_text">앱 설정</string>
+
     <!-- WriteBottomSheetDialog -->
     <string name="used_transaction"><b>중고거래</b></string>
     <string name="used_transaction_detail">중고 물건을 판매할 수 있어요</string>
@@ -52,4 +63,10 @@
     <string name="suggest_login_text"><b>가입하고 xx동\n중고 상품을 구경하세요!</b></string>
     <string name="login_button"><b>로그인하기</b></string>
     <string name="no_login_text">둘러보기</string>
+
+    <!-- SettingMainActivity -->
+    <string name="logout_dialog_title">로그아웃</string>
+    <string name="logout_dialog_message">로그아웃 하시겠습니까?</string>
+    <string name="logout_dialog_neutral">취소</string>
+    <string name="logout_dialog_positive">확인</string>
 </resources>
