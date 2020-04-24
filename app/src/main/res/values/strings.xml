@@ -52,6 +52,10 @@
     <string name="notice_text">공지사항</string>
     <string name="user_center_text">고객센터</string>
     <string name="app_setting_text">앱 설정</string>
+    <string name="see_profile_button"><b>프로필 보기</b></string>
+    <string name="sell_list_text">판매내역</string>
+    <string name="buy_list_text">구매내역</string>
+    <string name="want_list_text">관심목록</string>
 
     <!-- WriteBottomSheetDialog -->
     <string name="used_transaction"><b>중고거래</b></string>

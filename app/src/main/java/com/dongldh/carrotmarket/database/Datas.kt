@@ -4,4 +4,4 @@ package com.dongldh.carrotmarket.database
 data class DataLocation(val name: String, val row: Int, val col: Int)
 
 // 회원정보(프로필) 저장
-data class DataUser(val phone: String, var userName: String, var location: String, var profileImage: String? = null)
+data class DataUser(var phone: String = "test", var userName: String = "test", var location: String = "test", var profileImage: String? = null)

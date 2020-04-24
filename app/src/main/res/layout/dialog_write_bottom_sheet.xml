@@ -40,7 +40,7 @@
             app:layout_constraintTop_toBottomOf="@id/used_transaction"
             android:layout_marginTop="4dp"
             android:text="@string/used_transaction_detail"
-            android:textColor="@color/colorDarkBackground"/>
+            android:textColor="@color/colorDarkText"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@id/community_promotion"
             android:layout_marginTop="4dp"
             android:text="@string/community_promotion_detail"
-            android:textColor="@color/colorDarkBackground"/>
+            android:textColor="@color/colorDarkText"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

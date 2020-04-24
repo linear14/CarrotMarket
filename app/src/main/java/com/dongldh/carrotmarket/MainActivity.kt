@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import com.dongldh.carrotmarket.database.DataUser
 import com.dongldh.carrotmarket.dialog.SuggestLoginDialog
 import com.dongldh.carrotmarket.dialog.WriteBottomSheetDialog
 import com.dongldh.carrotmarket.main_fragment.CategoryFragment
@@ -13,14 +14,19 @@ import com.dongldh.carrotmarket.main_fragment.HomeFragment
 import com.dongldh.carrotmarket.main_fragment.MyCarrotFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_my_carrot.view.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     var auth: FirebaseAuth? = FirebaseAuth.getInstance()
+    val fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
+    val user = DataUser()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getUserInfo()
 
         bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.selectedItemId = R.id.action_home
@@ -98,7 +104,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.action_my_carrot -> {
+                val bundle = Bundle()
+                bundle.putString("phone", user.phone)
+                bundle.putString("userName", user.userName)
+                bundle.putString("location", user.location)
+                bundle.putString("profileImage", user.profileImage)
+
                 val myCarrotFragment = MyCarrotFragment()
+                myCarrotFragment.arguments = bundle
                 supportFragmentManager.beginTransaction().replace(R.id.main_content, myCarrotFragment).commit()
 
                 title_text.text = "나의 당근"
@@ -122,6 +135,21 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             Toast.makeText(this, "'뒤로'버튼 한 번 더 누르면 종료", Toast.LENGTH_SHORT).show()
         } else {
             super.onBackPressed()
+        }
+    }
+
+    // 유저의 기본 정보 받아오기. 필요한 프래그먼트로 binding 시켜서 보내줄 데이터 (나중에 bundle로 넣어주면 될걸)
+    // 각 프래그먼트에서 진행하면 텍스트 뷰에 값이 들어가는 반응이 너무 느리더라.. 그래서 MainActivity에서 진행을 해보기로 결정
+    fun getUserInfo() {
+        val uid = auth?.currentUser?.uid
+        if(uid != null) {
+            fireStore.collection("users").document(uid).addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                val item = documentSnapshot?.toObject(DataUser::class.java)
+                user.phone = item!!.phone
+                user.userName = item.userName
+                user.location = item.location
+                user.profileImage = item.profileImage
+            }
         }
     }
 }
