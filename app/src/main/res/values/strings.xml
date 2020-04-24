@@ -67,6 +67,6 @@
     <!-- SettingMainActivity -->
     <string name="logout_dialog_title">로그아웃</string>
     <string name="logout_dialog_message">로그아웃 하시겠습니까?</string>
-    <string name="logout_dialog_neutral">취소</string>
+    <string name="logout_dialog_negative">취소</string>
     <string name="logout_dialog_positive">확인</string>
 </resources>

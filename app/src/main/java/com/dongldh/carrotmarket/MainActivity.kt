@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
-    var auth: FirebaseAuth? = null
+    var auth: FirebaseAuth? = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +26,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         bottom_navigation.selectedItemId = R.id.action_home
 
         // 만약 세션 유지 된 계정이 존재하지 않는다면 Dialog를 띄워서 로그인 / 회원가입을 권유한다.
-        auth = FirebaseAuth.getInstance()
-        if(auth!!.currentUser == null) {
+        if(auth?.currentUser == null) {
             val dialog = SuggestLoginDialog()
             dialog.show(supportFragmentManager, "dialog_event")
         }
@@ -66,24 +65,36 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.action_write -> {
-                val dialog = WriteBottomSheetDialog()
-                dialog.show(supportFragmentManager, "dialog_bottom")
-
+                if(auth?.currentUser == null) {
+                    val dialog = SuggestLoginDialog()
+                    dialog.show(supportFragmentManager, "dialog_event")
+                } else {
+                    val dialog = WriteBottomSheetDialog()
+                    dialog.show(supportFragmentManager, "dialog_bottom")
+                }
                 return false
             }
 
             R.id.action_chat -> {
-                val chatFragment = ChatFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.main_content, chatFragment).commit()
+                if(auth?.currentUser == null) {
+                    val dialog = SuggestLoginDialog()
+                    dialog.show(supportFragmentManager, "dialog_event")
 
-                title_text.text = "채팅"
-                selected_location_image.visibility = View.GONE
-                search_image.visibility = View.GONE
-                location_setting_image.visibility = View.GONE
-                alarm_image.visibility = View.GONE
-                setting_image.visibility= View.GONE
+                    return false
+                } else {
+                    val chatFragment = ChatFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_content, chatFragment).commit()
 
-                return true
+                    title_text.text = "채팅"
+                    selected_location_image.visibility = View.GONE
+                    search_image.visibility = View.GONE
+                    location_setting_image.visibility = View.GONE
+                    alarm_image.visibility = View.GONE
+                    setting_image.visibility = View.GONE
+
+                    return true
+                }
             }
 
             R.id.action_my_carrot -> {

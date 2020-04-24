@@ -32,7 +32,7 @@ class SettingMainActivity : AppCompatActivity(), View.OnClickListener {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(R.string.logout_dialog_title)
                 builder.setMessage(R.string.logout_dialog_message)
-                builder.setNeutralButton(R.string.logout_dialog_neutral) { dialog, which ->
+                builder.setNegativeButton(R.string.logout_dialog_negative) { dialog, which ->
                     dialog.dismiss()
                 }
                 builder.setPositiveButton(R.string.logout_dialog_positive) { dialog, which ->
@@ -41,7 +41,7 @@ class SettingMainActivity : AppCompatActivity(), View.OnClickListener {
                     App.preference.location = null
 
                     val intent = Intent(this, StartActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }
                 val dialog = builder.create()
