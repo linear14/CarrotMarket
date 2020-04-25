@@ -2,6 +2,7 @@ package com.dongldh.carrotmarket
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -140,11 +141,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     // 유저의 기본 정보 받아오기. 필요한 프래그먼트로 binding 시켜서 보내줄 데이터 (나중에 bundle로 넣어주면 될걸)
     // 각 프래그먼트에서 진행하면 텍스트 뷰에 값이 들어가는 반응이 너무 느리더라.. 그래서 MainActivity에서 진행을 해보기로 결정
-    fun getUserInfo() {
+    private fun getUserInfo() {
         val uid = auth?.currentUser?.uid
         if(uid != null) {
             fireStore.collection("users").document(uid).addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
-                val item = documentSnapshot?.toObject(DataUser::class.java)
+                // 데이터가 변경 될 때마다 SnapshotListener가 동작하므로, 오류 발생할 경우를 return으로 잡아줘야함
+                // 로그아웃 시 여기서 오류가 발생해서 우선은 이렇게 처리를 했는데, 또 다른 경우에서 오류가 발생한다면?
+                // val item 쪽에서 null값을 받을 경우 default값으로 줬던 ?: DataUser() 부분을 조작해보자.
+                if(firebaseFirestoreException != null) {
+                    Log.d("Snapshot_Exception", "Listen failed. $firebaseFirestoreException")
+                    return@addSnapshotListener
+                }
+                val item = documentSnapshot?.toObject(DataUser::class.java) // ?: DataUser()
                 user.phone = item!!.phone
                 user.userName = item.userName
                 user.location = item.location

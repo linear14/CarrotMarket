@@ -126,6 +126,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_bottom_navigation"
+        android:background="@color/colorDefaultBackground"
         app:itemBackground="@color/colorDefaultBackground"
         app:itemIconTint="@color/decorate_bottom_navigation"
         app:itemTextColor="@color/decorate_bottom_navigation"/>
