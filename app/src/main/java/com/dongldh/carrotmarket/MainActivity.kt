@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getUserInfo()
 
+        getUserInfo()
         bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.selectedItemId = R.id.action_home
 
@@ -47,7 +47,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager.beginTransaction().replace(R.id.main_content, homeFragment)
                     .commit()
 
-                title_text.text = App.preference.location
+                // 프래그먼트간 이동에서 title_text의 값을 설정 할 필요가 있는 경우 다음과 같이 진행.
+                if(auth?.currentUser == null) {
+                    title_text.text = App.preference.location
+                } else {
+                    title_text.text = user.location
+                }
                 selected_location_image.visibility = View.VISIBLE
                 search_image.visibility = View.VISIBLE
                 location_setting_image.visibility = View.VISIBLE
@@ -141,6 +146,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     // 유저의 기본 정보 받아오기. 필요한 프래그먼트로 binding 시켜서 보내줄 데이터 (나중에 bundle로 넣어주면 될걸)
     // 각 프래그먼트에서 진행하면 텍스트 뷰에 값이 들어가는 반응이 너무 느리더라.. 그래서 MainActivity에서 진행을 해보기로 결정
+    // 기본적으로 activity가 실행되면 유저의 정보를 가장 먼저 받아오도록 설정했기 때문에, MainActivity에서의 유저 정보는 user인스턴스에서 가져다 사용하면 됩니다.
     private fun getUserInfo() {
         val uid = auth?.currentUser?.uid
         if(uid != null) {
@@ -157,6 +163,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 user.userName = item.userName
                 user.location = item.location
                 user.profileImage = item.profileImage
+
+                // 기본적으로 title_text는 회원의 지역정보를 반영한다.
+                title_text.text = user.location
             }
         }
     }
