@@ -73,4 +73,15 @@
     <string name="logout_dialog_message">로그아웃 하시겠습니까?</string>
     <string name="logout_dialog_negative">취소</string>
     <string name="logout_dialog_positive">확인</string>
+
+    <!-- WriteUsedActivity -->
+    <string name="write_used_transaction"><b>중고거래 글쓰기</b></string>
+    <string name="write_next_text">완료</string>
+    <string name="write_used_title_input">제목</string>
+    <string name="write_used_category_text">카테고리</string>
+    <string name="write_used_price_text">₩</string>
+    <string name="write_used_price_input">가격 (선택사항)</string>
+    <string name="write_used_price_suggest_check">가격 제안 받기</string>
+    <string name="write_used_content_input">xx동에 올릴 게시글 내용을 작성해주세요.\n가품 및 판매금지품목은 게시가 제한될 수 있어요.</string>
+    <string name="write_used_near_location_text">xx동과 근처 동네 xx개</string>
 </resources>
