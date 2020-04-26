@@ -18,11 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".write.WriteUsedActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".setting.SettingMainActivity" />
         <activity android:name=".ProfileActivity" />
@@ -42,7 +38,11 @@
             android:name=".SelectLocationActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".SignActivity"></activity>
         <activity android:name=".MainActivity"></activity>

@@ -33,10 +33,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         bottom_navigation.selectedItemId = R.id.action_home
 
         // 만약 세션 유지 된 계정이 존재하지 않는다면 Dialog를 띄워서 로그인 / 회원가입을 권유한다.
-        if(auth?.currentUser == null) {
-            val dialog = SuggestLoginDialog()
-            dialog.show(supportFragmentManager, "dialog_event")
-        }
+        if(auth?.currentUser == null) showSuggestLoginDialog()
     }
 
     // BottomNavigation 선택시 화면 전환
@@ -77,10 +74,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.action_write -> {
-                if(auth?.currentUser == null) {
-                    val dialog = SuggestLoginDialog()
-                    dialog.show(supportFragmentManager, "dialog_event")
-                } else {
+                if(auth?.currentUser == null) showSuggestLoginDialog()
+                else {
                     val dialog = WriteBottomSheetDialog()
                     dialog.show(supportFragmentManager, "dialog_bottom")
                 }
@@ -89,9 +84,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
             R.id.action_chat -> {
                 if(auth?.currentUser == null) {
-                    val dialog = SuggestLoginDialog()
-                    dialog.show(supportFragmentManager, "dialog_event")
-
+                    showSuggestLoginDialog()
                     return false
                 } else {
                     val chatFragment = ChatFragment()
@@ -168,5 +161,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 title_text.text = user.location
             }
         }
+    }
+
+    // 로그인이 되어있지 않은 상태에서 로그인 권한을 요구하는 프래그먼트를 혹은 동작을 실행했을 때 띄워지는 Dialog
+    // location 값을 보내주어 값을 넣어줄 수 있도록
+    private fun showSuggestLoginDialog() {
+        val dialog = SuggestLoginDialog()
+        dialog.show(supportFragmentManager, "dialog_event")
     }
 }
