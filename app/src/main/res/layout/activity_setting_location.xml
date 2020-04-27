@@ -66,6 +66,7 @@
         android:paddingVertical="32dp">
 
         <TextView
+            android:id="@+id/near_location_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/near_location_text"

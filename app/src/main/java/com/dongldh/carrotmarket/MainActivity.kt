@@ -77,6 +77,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 if(auth?.currentUser == null) showSuggestLoginDialog()
                 else {
                     val dialog = WriteBottomSheetDialog()
+                    val bundle = Bundle()
+                    bundle.putString("location", user.location)
+                    bundle.putString("locationNear", user.locationNear.toString())
+                    dialog.arguments = bundle
                     dialog.show(supportFragmentManager, "dialog_bottom")
                 }
                 return false
@@ -156,6 +160,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 user.userName = item.userName
                 user.location = item.location
                 user.profileImage = item.profileImage
+                user.locationNear = item.locationNear
 
                 // 기본적으로 title_text는 회원의 지역정보를 반영한다.
                 title_text.text = user.location
