@@ -83,5 +83,13 @@
     <string name="write_used_price_input">가격 (선택사항)</string>
     <string name="write_used_price_suggest_check">가격 제안 받기</string>
     <string name="write_used_content_input">xx동에 올릴 게시글 내용을 작성해주세요.\n가품 및 판매금지품목은 게시가 제한될 수 있어요.</string>
-    <string name="write_used_near_location_text">xx동과 근처 동네 xx개</string>
+    <string name="write_used_near_location_text">xx동과 <u>xx칸 떨어진</u> 동네</string>
+
+    <!-- SettingLocationActivity -->
+    <string name="location_setting_toolbar"><b>내 동네 설정</b></string>
+    <string name="select_location_area_toolbar"><b>게시글 보여줄 동네 고르기</b></string>
+    <string name="near_location_text"><b>xx동과 <u>xx칸 떨어진</u> 동네</b></string>
+    <string name="near_location_hint">선택한 동네의 이웃들만 피드에서 이 게시글을 볼 수 있어요</string>
+    <string name="my_location_text">내동네</string>
+    <string name="other_location_text">근처동네</string>
 </resources>
