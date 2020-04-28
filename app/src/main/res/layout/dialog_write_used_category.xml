@@ -120,7 +120,5 @@
             android:padding="12dp"
             android:text="@string/category_buy"
             android:textSize="18sp" />
-
-
     </LinearLayout>
 </ScrollView>

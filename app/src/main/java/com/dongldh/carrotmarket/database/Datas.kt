@@ -5,3 +5,9 @@ data class DataLocation(val name: String, val row: Int, val col: Int)
 
 // 회원정보(프로필) 저장
 data class DataUser(var phone: String = "test", var userName: String = "로그인하세요", var location: String = "", var profileImage: String? = null, var locationNear: Long = 1L)
+
+// 상품 등록 시 필요한 데이터 저장
+// type : 1 -> 중고물품 거래,  2 -> 지역 홍보
+data class DataItem(val phone: String, val userName: String, val type: Int, val title: String,
+                    val category: String, val location: String, val price: Int?, val isPossibleSuggestion: Boolean,
+                    val content: String?, val timeStamp: Long = System.currentTimeMillis())

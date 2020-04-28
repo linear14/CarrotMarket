@@ -8,24 +8,36 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import com.dongldh.carrotmarket.R
+import com.dongldh.carrotmarket.database.DataItem
 import com.dongldh.carrotmarket.dialog.WriteUsedCategoryDialog
 import com.dongldh.carrotmarket.setting.SettingLocationActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign.*
 import kotlinx.android.synthetic.main.activity_write_used.*
+import kotlinx.android.synthetic.main.activity_write_used.title_text
+import kotlinx.android.synthetic.main.item_uploaded_item.*
 
 // SettingLocationActivity에서 변경된 locationNear의 값을 받아온 뒤 텍스트 값을 바꿔 준다.
 const val FROM_SETTING_LOCATION = 1000
 
 class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
+    var auth: FirebaseAuth? = null
+    var fireStore: FirebaseFirestore? = null
+
     var location: String? = null
     var locationNear: String? = null
 
-    var priceSuggest = true
+    var isPossibleSuggestion = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write_used)
+
+        auth = FirebaseAuth.getInstance()
+        fireStore = FirebaseFirestore.getInstance()
 
         // 아래에 있는 지역과 인접정보를 변경해준다.
         location = intent.getStringExtra("location")
@@ -38,6 +50,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
         write_used_price_suggest_check_layout.setOnClickListener(this)
         write_used_near_location_layout.setOnClickListener(this)
         back_image.setOnClickListener(this)
+        next_text.setOnClickListener(this)
 
         // 금액 입력 하면 WON 표시에 불 들어오게끔 ^^
         write_used_price_input.addTextChangedListener(object : TextWatcher {
@@ -63,12 +76,12 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
             // check를 누를 때 마다 이미지 변경 및 글자 색 변경
             // 그리고, data도 글과 관련된 정보 데이터도 바꿔 줘야 되는거 알지?
             write_used_price_suggest_check_layout -> {
-                if(priceSuggest) {
-                    priceSuggest = false
+                if(isPossibleSuggestion) {
+                    isPossibleSuggestion = false
                     write_used_price_suggest_check_image.setImageResource(R.drawable.ic_unchecked)
                     write_used_price_suggest_check.setTextColor(Color.parseColor("#B6B6B6"))
                 } else {
-                    priceSuggest = true
+                    isPossibleSuggestion = true
                     write_used_price_suggest_check_image.setImageResource(R.drawable.ic_checked)
                     write_used_price_suggest_check.setTextColor(Color.BLACK)
                 }
@@ -83,9 +96,9 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                 startActivityForResult(intent, FROM_SETTING_LOCATION)
             }
 
-            back_image -> {
-                finish()
-            }
+            back_image -> finish()
+            next_text -> uploadItem()
+
         }
     }
 
@@ -101,6 +114,31 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                         .replace("yy", locationNear!!)
                 }
             }
+        }
+    }
+
+    // 저장된 정보를 firebase firestore에 저장하는 메서드
+    fun uploadItem() {
+        val uid = auth?.currentUser!!.uid
+
+        // 접속 성공 리스너를 달아줘야함. 비동기적으로 작동을 시키기 위해서임
+        fireStore!!.collection("users").document(uid).get().addOnSuccessListener {
+            val phone = it["phone"].toString()
+            val userName = it["userName"].toString()
+            val type = 1
+            val title = title_text.text.toString()
+            val category = write_used_category_text.text.toString()
+            val location = location!!
+            val price = write_used_price_input.text.toString().toInt()
+            val isPossibleSuggestion = isPossibleSuggestion
+            val content = write_used_content_input.text.toString()
+
+            val item = DataItem(phone, userName, type, title, category, location, price, isPossibleSuggestion, content)
+            fireStore!!.collection("UsedItems").document(uid).set(item)
+                .addOnSuccessListener { Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener { Toast.makeText(this, "게시글 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show() }
+
+            finish()
         }
     }
 }
