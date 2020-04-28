@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/category_digital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_digital"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_furniture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_furniture"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_baby"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_baby"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_life_food"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_life_food"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_female_cloth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_female_cloth"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_female"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_female"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_beauty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_beauty"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_male"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_male"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_sport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_sport"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_game"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_book"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_animal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_animal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_etc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_etc"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/category_buy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="@string/category_buy"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+</ScrollView>

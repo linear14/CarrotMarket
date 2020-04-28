@@ -160,3 +160,10 @@ https://www.youtube.com/watch?v=IfpRL2K1hJk
 1. addSnapshotListener (MainActivity에서 firebase database정보 받아올 때의 경우) -> 콜백 메서드이며, 내용이 변경될 때 마다 콜백이 호출됨
 https://firebase.google.com/docs/firestore/query-data/listen?hl=ko
 따라서, firebaseFirestoreException가 null이 아닐 경우에 대한 함수 값 리턴을 처리해줘야함
+
+20.04.28 화
+약간 새로운 스킬들을 공부한 것 같음
+1. Activity에서 Dialog에서 선택한 정보를 바로 텍스트뷰에 바로 바꾸고 싶다면
+Dialog를 구성하는 클래스에 생성자로 바꾸고 싶은 뷰를 집어넣고, 그 안에서 처리한다. (WriteUsedActivity의 write_used_category_layout 클릭 할 때를 공부)
+
+2. 다이얼로그 내에서 같은 형태의 뷰에대한 처리를 원한다면? WriteUsedCategoryDialog에서 각 뷰 클릭시 처리내용을 확인한다.
