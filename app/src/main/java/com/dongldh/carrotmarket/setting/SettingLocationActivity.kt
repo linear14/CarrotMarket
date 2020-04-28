@@ -50,13 +50,15 @@ class SettingLocationActivity : AppCompatActivity() {
 
 
         // 다시 locationNear의 값을 돌려주자~ WriteUsedActivity에서 반영될 수 있도록^^
+        // 여기서 firestore의 데이터를 바꾸주면.. MainActivity에서의 getUserInfo안의 callback이 작동하므로
+        // 특별한 조작을 하지 않아도 MainActivity에서의 DataUser의 정보가 바뀌는 아주 편리한 상황이 생긴다.
         back_image.setOnClickListener {
             val uid = auth.currentUser!!.uid
             fireStore.collection("users").document(uid).update("locationNear", locationNear)
 
             val intent = Intent()
             intent.putExtra("locationNear", locationNear.toString())
-            setResult(Activity.RESULT_OK)
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }

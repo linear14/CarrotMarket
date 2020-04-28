@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.d("LifeCycle", "MainActivity_onCreate()")
 
         getUserInfo()
         bottom_navigation.setOnNavigationItemSelectedListener(this)
@@ -155,6 +156,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     Log.d("Snapshot_Exception", "Listen failed. $firebaseFirestoreException")
                     return@addSnapshotListener
                 }
+
+                // 메소드 콜백이 되므로, 어디에선가 데이터를 변경할 경우 자동으로 user의 정보를 바꿔준다. 아주 편리함.
+                Log.d("MethodCallStack", "MainActivity_getUserInfo() call...")
                 val item = documentSnapshot?.toObject(DataUser::class.java) // ?: DataUser()
                 user.phone = item!!.phone
                 user.userName = item.userName
