@@ -77,6 +77,7 @@
     <!-- WriteUsedActivity -->
     <string name="write_used_transaction"><b>중고거래 글쓰기</b></string>
     <string name="write_next_text">완료</string>
+    <string name="write_used_image_count_text">0/10</string>
     <string name="write_used_title_input">제목</string>
     <string name="write_used_category_text">카테고리</string>
     <string name="write_used_price_text">₩</string>
@@ -84,6 +85,18 @@
     <string name="write_used_price_suggest_check">가격 제안 받기</string>
     <string name="write_used_content_input">xx동에 올릴 게시글 내용을 작성해주세요.\n가품 및 판매금지품목은 게시가 제한될 수 있어요.</string>
     <string name="write_used_near_location_text">xx동과 <u>yy칸 떨어진</u> 동네</string>
+
+    <!-- WritePromotionActivity -->
+    <string name="write_community_promotion"><b>동네홍보 글쓰기</b></string>
+    <string name="write_community_text">완료</string>
+    <string name="write_community_image_count_text">0/10</string>
+    <string name="write_community_title_input">제목</string>
+    <string name="write_community_category_text">카테고리</string>
+    <string name="write_community_price_text">₩</string>
+    <string name="write_community_price_input">가격 (선택사항)</string>
+    <string name="write_community_phone_input">전화번호 입력 (선택사항)</string>
+    <string name="write_community_chat_check">채팅 안 받기</string>
+    <string name="write_community_content_input">xx동 근처 주민들에게 홍보하고 싶은 내용을 작성해주세요. 작성 후 광고 상품을 구매하면 홈 목록의 광고 영역에 게시글을 노출할 수 있어요.</string>
 
     <!-- SettingLocationActivity -->
     <string name="location_setting_toolbar"><b>내 동네 설정</b></string>
@@ -93,7 +106,7 @@
     <string name="my_location_text">내동네</string>
     <string name="other_location_text">근처동네</string>
 
-    <!-- WriteUsedCategoryDialog -->
+    <!-- WriteUsedCategoryDialog, WriteCommunityCategoryDialog -->
     <string name="category_digital">디지털/가전</string>
     <string name="category_furniture">가구/인테리어</string>
     <string name="category_baby">유아동/유아도서</string>
@@ -108,4 +121,13 @@
     <string name="category_animal">반려동물용품</string>
     <string name="category_etc">기타 중고물품</string>
     <string name="category_buy">삽니다</string>
+
+    <string name="category_car">중고차/오토바이</string>
+    <string name="category_person">동네 구인구직</string>
+    <string name="category_land">부동산</string>
+    <string name="category_nature_food">농수산물</string>
+    <string name="category_company">지역업체 소개</string>
+    <string name="category_study">과외/클래스 모집</string>
+    <string name="category_party">전시/공연/행사</string>
+
 </resources>

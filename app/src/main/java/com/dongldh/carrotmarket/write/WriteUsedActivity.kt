@@ -119,26 +119,33 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
 
     // 저장된 정보를 firebase firestore에 저장하는 메서드
     fun uploadItem() {
-        val uid = auth?.currentUser!!.uid
+        when {
+            write_used_title_input.text.isEmpty() -> Toast.makeText(this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show()
+            write_used_category_text.text.toString() == "카테고리" -> Toast.makeText(this, "카테고리를 선택해주세요", Toast.LENGTH_SHORT).show()
+            write_used_content_input.text.length < 15 -> Toast.makeText(this, "내용이 너무 짧습니다", Toast.LENGTH_SHORT).show()
+            else -> {
+                val uid = auth?.currentUser!!.uid
 
-        // 접속 성공 리스너를 달아줘야함. 비동기적으로 작동을 시키기 위해서임
-        fireStore!!.collection("users").document(uid).get().addOnSuccessListener {
-            val phone = it["phone"].toString()
-            val userName = it["userName"].toString()
-            val type = 1
-            val title = title_text.text.toString()
-            val category = write_used_category_text.text.toString()
-            val location = location!!
-            val price = write_used_price_input.text.toString().toInt()
-            val isPossibleSuggestion = isPossibleSuggestion
-            val content = write_used_content_input.text.toString()
+                // 접속 성공 리스너를 달아줘야함. 비동기적으로 작동을 시키기 위해서임
+                fireStore!!.collection("users").document(uid).get().addOnSuccessListener {
+                    val userName = it["userName"].toString()
+                    val type = 1
+                    val title = write_used_title_input.text.toString()
+                    val category = write_used_category_text.text.toString()
+                    val location = location!!
+                    val content = write_used_content_input.text.toString()
+                    val price = write_used_price_input.text.toString()
+                    val isPossibleSuggestion = isPossibleSuggestion
 
-            val item = DataItem(phone, userName, type, title, category, location, price, isPossibleSuggestion, content)
-            fireStore!!.collection("UsedItems").document(uid).set(item)
-                .addOnSuccessListener { Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener { Toast.makeText(this, "게시글 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show() }
+                    val item = DataItem(userName, type, title, category, location, content, if(price == "") null else price.toInt(), isPossibleSuggestion = isPossibleSuggestion)
 
-            finish()
+                    fireStore!!.collection("UsedItems").document().set(item)
+                        .addOnSuccessListener { Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show() }
+                        .addOnFailureListener { Toast.makeText(this, "게시글 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show() }
+
+                    finish()
+                }
+            }
         }
     }
 }

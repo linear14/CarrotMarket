@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dongldh.carrotmarket.R
+import com.dongldh.carrotmarket.write.WriteCommunityActivity
 import com.dongldh.carrotmarket.write.WriteUsedActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_write_bottom_sheet.view.*
@@ -18,6 +19,13 @@ class WriteBottomSheetDialog: BottomSheetDialogFragment() {
             val intent = Intent(activity, WriteUsedActivity::class.java)
             intent.putExtra("location", arguments!!.getString("location"))
             intent.putExtra("locationNear", arguments!!.getString("locationNear"))
+            startActivity(intent)
+            dismiss()
+        }
+
+        view.community_promotion_layout.setOnClickListener {
+            val intent = Intent(activity, WriteCommunityActivity::class.java)
+            intent.putExtra("location", arguments!!.getString("location"))
             startActivity(intent)
             dismiss()
         }
