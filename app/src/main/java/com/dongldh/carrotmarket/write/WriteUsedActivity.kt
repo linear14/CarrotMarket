@@ -113,9 +113,12 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
         when(v) {
             // 이미지 삽입
             image_count_layout -> {
-                val intent = Intent(Intent.ACTION_PICK)
-                intent.type = "image/*"
-                startActivityForResult(intent, PICK_IMAGE_FROM_ALBUM)
+                if(photoUriList.size == 10) Toast.makeText(this, "사진을 더 이상 추가할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                else {
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = "image/*"
+                    startActivityForResult(intent, PICK_IMAGE_FROM_ALBUM)
+                }
             }
 
             // category 설정 가능
@@ -186,7 +189,6 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
     // 올라와있는 사진의 수를 센 뒤, 텍스트뷰를 재 설정해준다.
     fun countPhotos() {
         val count = photoUriList.size
-        Log.d("count11", count.toString())
         image_count_text.text = getString(R.string.write_used_image_count_text).replace("xx", count.toString())
     }
 

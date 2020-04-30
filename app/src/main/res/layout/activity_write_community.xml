@@ -85,7 +85,7 @@
             <!-- Image -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp">
+                android:layout_height="100dp">
 
                 <LinearLayout
                     android:id="@+id/image_count_layout"
@@ -114,7 +114,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/write_community_recycler"
                     android:layout_width="0dp"
-                    android:layout_height="90dp"
+                    android:layout_height="100dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/image_count_layout"
                     app:layout_constraintTop_toTopOf="parent"
