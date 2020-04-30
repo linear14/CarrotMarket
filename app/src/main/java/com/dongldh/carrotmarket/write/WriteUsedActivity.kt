@@ -3,34 +3,45 @@ package com.dongldh.carrotmarket.write
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataItem
+import com.dongldh.carrotmarket.database.FROM_SETTING_LOCATION
+import com.dongldh.carrotmarket.database.PICK_IMAGE_FROM_ALBUM
+import com.dongldh.carrotmarket.database.Permissions
 import com.dongldh.carrotmarket.dialog.WriteUsedCategoryDialog
 import com.dongldh.carrotmarket.setting.SettingLocationActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_sign.*
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_write_used.*
-import kotlinx.android.synthetic.main.activity_write_used.title_text
-import kotlinx.android.synthetic.main.item_uploaded_item.*
+import kotlinx.android.synthetic.main.activity_write_used.back_image
+import kotlinx.android.synthetic.main.activity_write_used.image_count_layout
+import kotlinx.android.synthetic.main.activity_write_used.next_text
+import kotlinx.android.synthetic.main.item_write_photo_item.view.*
 
-// SettingLocationActivity에서 변경된 locationNear의 값을 받아온 뒤 텍스트 값을 바꿔 준다.
-const val FROM_SETTING_LOCATION = 1000
 
 class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
     var auth: FirebaseAuth? = null
     var fireStore: FirebaseFirestore? = null
+    var storage: FirebaseStorage? = null
 
-    var location: String? = null
-    var locationNear: String? = null
+    var location: String? = null    // 등록되는 지역
+    var locationNear: String? = null    // 몇 칸 떨어진 거리까지 허용 가능한가에 대한 변수
+    var photoUriList = mutableListOf<Uri>()   // 받아온 사진 Uri
 
-    var isPossibleSuggestion = true
+    var isPossibleSuggestion = true // 가격 제안 가능?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +49,11 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
 
         auth = FirebaseAuth.getInstance()
         fireStore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
 
+        Permissions(applicationContext).permissionStorage()     // 내가 만든 Permissions 클래스
+
+        countPhotos() // 등록된 사진의 갯수 수정
         // 아래에 있는 지역과 인접정보를 변경해준다.
         location = intent.getStringExtra("location")
         locationNear = intent.getStringExtra("locationNear")
@@ -46,6 +61,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
             .replace("xx", location!!)
             .replace("yy", locationNear!!)
 
+        image_count_layout.setOnClickListener(this)
         write_used_category_layout.setOnClickListener(this)
         write_used_price_suggest_check_layout.setOnClickListener(this)
         write_used_near_location_layout.setOnClickListener(this)
@@ -64,8 +80,44 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
+    // 상품의 예시 이미지를 imageView에 띄워주는 어댑터클래스
+    class WriteViewHolder(view: View): RecyclerView.ViewHolder(view) {
+        val image = view.item_item_image
+        val delete = view.item_delete_text
+    }
+    
+    inner class WriteAdapter(val list: MutableList<Uri>): RecyclerView.Adapter<WriteViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WriteViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            return WriteViewHolder(layoutInflater.inflate(R.layout.item_write_photo_item, parent, false))
+        }
+
+        override fun getItemCount(): Int {
+            return list.size
+        }
+
+        override fun onBindViewHolder(holder: WriteViewHolder, position: Int) {
+            val uri = photoUriList[position]
+
+            holder.image.setImageURI(uri)
+            holder.delete.setOnClickListener {
+                photoUriList.removeAt(position)
+                countPhotos() // 등록된 사진의 갯수 수정
+                write_used_recycler.adapter = WriteAdapter(photoUriList)    // recyclerView 다시 업데이트 해야지!
+            }
+        }
+
+    }
+
     override fun onClick(v: View?) {
         when(v) {
+            // 이미지 삽입
+            image_count_layout -> {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*"
+                startActivityForResult(intent, PICK_IMAGE_FROM_ALBUM)
+            }
+
             // category 설정 가능
             // Dialog 생성자로 textView를 집어 넣었기 때문에, 해당 클래스 안에서 text의 조작이 가능하게끔 설정
             write_used_category_layout -> {
@@ -98,7 +150,6 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
 
             back_image -> finish()
             next_text -> uploadItem()
-
         }
     }
 
@@ -106,6 +157,21 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
 
         when(requestCode) {
+            // 갤러리에서 돌아온 뒤의 처리
+            PICK_IMAGE_FROM_ALBUM -> {
+                if(resultCode == Activity.RESULT_OK) {
+                    val photoUri = data?.data!!
+                    photoUriList.add(photoUri)      // UriList에 받아온 Uri값을 추가해준다.
+                    countPhotos() // 등록된 사진의 갯수 수정
+
+                    val layoutManager = LinearLayoutManager(this)
+                    layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                    write_used_recycler.layoutManager = layoutManager
+                    write_used_recycler.adapter = WriteAdapter(photoUriList)
+                }
+            }
+
+            // 돌아오면 맨 아래 지역과 떨어진 거리정보 텍스트 변경된다
             FROM_SETTING_LOCATION -> {
                 if(resultCode == Activity.RESULT_OK) {
                     locationNear = data?.getStringExtra("locationNear")
@@ -115,6 +181,13 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    // 올라와있는 사진의 수를 센 뒤, 텍스트뷰를 재 설정해준다.
+    fun countPhotos() {
+        val count = photoUriList.size
+        Log.d("count11", count.toString())
+        image_count_text.text = getString(R.string.write_used_image_count_text).replace("xx", count.toString())
     }
 
     // 저장된 정보를 firebase firestore에 저장하는 메서드

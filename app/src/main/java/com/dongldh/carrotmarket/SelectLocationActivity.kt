@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dongldh.carrotmarket.database.DBHelper
 import com.dongldh.carrotmarket.database.DataLocation
+import com.dongldh.carrotmarket.database.Permissions
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_select_location.*
@@ -27,34 +28,11 @@ class SelectLocationActivity : AppCompatActivity() {
     // 검색창에 적힌 글자가 포함된 지역 리스트
     val searchedLocationList = mutableListOf<DataLocation>()
 
-    // 위치정보 수집 동의 혹은 거절시 발생하는 리스너
-    // ============ 후에 실제로 자신의 위치에 따라 값이 초기화 되도록 설정을 해야한다.  =============
-    // ============ 로그 박아둘테니 기회가 된다면 꼭 해봐요~~ ============
-    val locationPermissionListener = object: PermissionListener {
-        override fun onPermissionGranted() {
-            Toast.makeText(this@SelectLocationActivity, "지역 정보가 업데이트 된다!!", Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onPermissionDenied(deniedPermissions: ArrayList<String>?) {
-            Toast.makeText(this@SelectLocationActivity, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_location)
 
-        // 위치 정보를 수집하는 퍼미션 승인 여부를 체크한다.
-        TedPermission(this)
-            .setPermissionListener(locationPermissionListener)
-            .setRationaleMessage("위치 정보를 수집하여 다양한 기능을 활용합니다.")
-            .setDeniedMessage("If you reject permission, you cannot find your nearest location automatically\n\n" +
-                    "Please turn on permission at [Setting] > [Permission]")
-            .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
-            .setGotoSettingButton(true)
-            .setGotoSettingButtonText("설정으로 이동")
-            .check()
-
+        Permissions(applicationContext).permissionLocation()    // Permissions 클래스 안에 리스너랑 퍼미션설정하는 부분 다 구현함
         LocationRecyclerSetting()
 
         clear_image.setOnClickListener { search_input.text.clear() }

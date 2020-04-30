@@ -1,7 +1,7 @@
 package com.dongldh.carrotmarket
 
 import android.app.Application
-import com.dongldh.carrotmarket.shared_preference.SharedPreference
+import com.dongldh.carrotmarket.database.SharedPreference
 
 class App : Application() {
 
@@ -10,7 +10,8 @@ class App : Application() {
     }
 
     override fun onCreate() {
-        preference = SharedPreference(applicationContext)
+        preference =
+            SharedPreference(applicationContext)
         super.onCreate()
     }
 

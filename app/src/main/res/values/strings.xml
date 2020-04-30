@@ -77,7 +77,7 @@
     <!-- WriteUsedActivity -->
     <string name="write_used_transaction"><b>중고거래 글쓰기</b></string>
     <string name="write_next_text">완료</string>
-    <string name="write_used_image_count_text">0/10</string>
+    <string name="write_used_image_count_text">xx/10</string>
     <string name="write_used_title_input">제목</string>
     <string name="write_used_category_text">카테고리</string>
     <string name="write_used_price_text">₩</string>
@@ -89,7 +89,7 @@
     <!-- WritePromotionActivity -->
     <string name="write_community_promotion"><b>동네홍보 글쓰기</b></string>
     <string name="write_community_text">완료</string>
-    <string name="write_community_image_count_text">0/10</string>
+    <string name="write_community_image_count_text">xx/10</string>
     <string name="write_community_title_input">제목</string>
     <string name="write_community_category_text">카테고리</string>
     <string name="write_community_price_text">₩</string>

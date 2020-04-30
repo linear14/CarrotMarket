@@ -85,7 +85,7 @@
             <!-- Image -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="90dp">
 
                 <LinearLayout
                     android:id="@+id/image_count_layout"
@@ -95,7 +95,8 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <ImageView
                         android:layout_width="24dp"
@@ -103,6 +104,7 @@
                         android:src="@mipmap/ic_launcher" />
 
                     <TextView
+                        android:id="@+id/image_count_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/write_community_image_count_text"
@@ -112,11 +114,11 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/write_community_recycler"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="90dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/image_count_layout"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_write_photo_item"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
