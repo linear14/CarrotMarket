@@ -30,6 +30,8 @@ import kotlinx.android.synthetic.main.activity_write_used.back_image
 import kotlinx.android.synthetic.main.activity_write_used.image_count_layout
 import kotlinx.android.synthetic.main.activity_write_used.next_text
 import kotlinx.android.synthetic.main.item_write_photo_item.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
@@ -40,6 +42,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
     var location: String? = null    // 등록되는 지역
     var locationNear: String? = null    // 몇 칸 떨어진 거리까지 허용 가능한가에 대한 변수
     var photoUriList = mutableListOf<Uri>()   // 받아온 사진 Uri
+    var firebasePhotoUriList = mutableListOf<String>() // 사진 Uri를 string으로 바꿈 - 파이어베이스는 String형의 list만 허용 가능하므로
 
     var isPossibleSuggestion = true // 가격 제안 가능?
 
@@ -165,6 +168,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                 if(resultCode == Activity.RESULT_OK) {
                     val photoUri = data?.data!!
                     photoUriList.add(photoUri)      // UriList에 받아온 Uri값을 추가해준다.
+                    firebasePhotoUriList.add(photoUri.toString())
                     countPhotos() // 등록된 사진의 갯수 수정
 
                     val layoutManager = LinearLayoutManager(this)
@@ -212,7 +216,8 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                     val price = write_used_price_input.text.toString()
                     val isPossibleSuggestion = isPossibleSuggestion
 
-                    val item = DataItem(userName, type, title, category, location, content, if(price == "") null else price.toInt(), isPossibleSuggestion = isPossibleSuggestion)
+                    val item = DataItem(userName, type, title, category, location, content, if(price == "") null else price.toInt(),
+                        photos = firebasePhotoUriList, isPossibleSuggestion = isPossibleSuggestion)
 
                     fireStore!!.collection("UsedItems").document().set(item)
                         .addOnSuccessListener { Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show() }
