@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataItem
 import com.google.firebase.auth.FirebaseAuth
@@ -72,7 +73,11 @@ class HomeFragment: Fragment() {
 
             // 저장된 사진이 없다면 기본 이미지를 등록, 있다면 사진 모음의 첫 사진을 등록
             if(item.photos.isNullOrEmpty()) holder.photo.setImageResource(R.mipmap.ic_launcher)
-            else holder.photo.setImageURI(Uri.parse(item.photos[0]))
+            else {
+                Glide.with(holder.itemView.context)
+                    .load(item.photos[0])
+                    .into(holder.photo)
+            }
 
             holder.title.text = item.title
             holder.location.text = "${item.location} · $time"

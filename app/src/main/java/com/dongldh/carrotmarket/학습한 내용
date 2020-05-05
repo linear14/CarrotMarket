@@ -173,3 +173,8 @@ Task is not yet complete 관련 오류 발생시 -> addOnSuccessListener 를 달
 
 20.04.30 목
 1. 사진 업로드 작업 간단하게 수행 (Intent 사용하면 간단하게 해결) -> WriteUsedActivity참고
+
+20.05.05 화
+1. 이미지를 storage를 넣는 방법에 대한 학습 진행. (특히, 여러 이미지를 저장하고 downloadUrl을 리스트에 담는 방법에 대한 학습을 했다는 것이 중요)
+https://github.com/abhidiwakar/FirebaseStorageMultipleFilesUpload/blob/master/app/src/main/java/tech/fadedib/firebasestorage_multiplefilesupload/MainActivity.java
+https://www.youtube.com/watch?v=b0WUt3gfNCI

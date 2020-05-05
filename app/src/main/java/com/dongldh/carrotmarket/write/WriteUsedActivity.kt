@@ -3,6 +3,7 @@ package com.dongldh.carrotmarket.write
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,9 +23,12 @@ import com.dongldh.carrotmarket.database.PICK_IMAGE_FROM_ALBUM
 import com.dongldh.carrotmarket.database.Permissions
 import com.dongldh.carrotmarket.dialog.WriteUsedCategoryDialog
 import com.dongldh.carrotmarket.setting.SettingLocationActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_write_used.*
 import kotlinx.android.synthetic.main.activity_write_used.back_image
 import kotlinx.android.synthetic.main.activity_write_used.image_count_layout
@@ -45,6 +49,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
     var firebasePhotoUriList = mutableListOf<String>() // 사진 Uri를 string으로 바꿈 - 파이어베이스는 String형의 list만 허용 가능하므로
 
     var isPossibleSuggestion = true // 가격 제안 가능?
+    var counter = 0 // 업로드 성공, 혹은 실패 처리 된 이미지의 수를 카운팅.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,7 +160,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             back_image -> finish()
-            next_text -> uploadItem()
+            next_text -> uploadImages()
         }
     }
 
@@ -168,7 +173,6 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                 if(resultCode == Activity.RESULT_OK) {
                     val photoUri = data?.data!!
                     photoUriList.add(photoUri)      // UriList에 받아온 Uri값을 추가해준다.
-                    firebasePhotoUriList.add(photoUri.toString())
                     countPhotos() // 등록된 사진의 갯수 수정
 
                     val layoutManager = LinearLayoutManager(this)
@@ -196,8 +200,8 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
         image_count_text.text = getString(R.string.write_used_image_count_text).replace("xx", count.toString())
     }
 
-    // 저장된 정보를 firebase firestore에 저장하는 메서드
-    fun uploadItem() {
+    // 이미지를 storage에 저장하는 작업 + 저장이 완료 됐다면 saveImageToFireStore 메서드 호출
+    fun uploadImages() {
         when {
             write_used_title_input.text.isEmpty() -> Toast.makeText(this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show()
             write_used_category_text.text.toString() == "카테고리" -> Toast.makeText(this, "카테고리를 선택해주세요", Toast.LENGTH_SHORT).show()
@@ -205,27 +209,75 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
             else -> {
                 val uid = auth?.currentUser!!.uid
 
-                // 접속 성공 리스너를 달아줘야함. 비동기적으로 작동을 시키기 위해서임
-                fireStore!!.collection("users").document(uid).get().addOnSuccessListener {
-                    val userName = it["userName"].toString()
-                    val type = 1
-                    val title = write_used_title_input.text.toString()
-                    val category = write_used_category_text.text.toString()
-                    val location = location!!
-                    val content = write_used_content_input.text.toString()
-                    val price = write_used_price_input.text.toString()
-                    val isPossibleSuggestion = isPossibleSuggestion
+                // 이미지가 등록되어 있다면 이미지 포함하여 저장. 그렇지 않으면(else) 정보만 저장
+                if(photoUriList.size != 0) {
+                    val storageReference = storage?.reference
+                    for(uri in photoUriList) {
+                        val timestamp = System.currentTimeMillis()
+                        val imageFileName = "IMAGE_${uid}_${timestamp}.png"
 
-                    val item = DataItem(userName, type, title, category, location, content, if(price == "") null else price.toInt(),
-                        photos = firebasePhotoUriList, isPossibleSuggestion = isPossibleSuggestion)
-
-                    fireStore!!.collection("UsedItems").document().set(item)
-                        .addOnSuccessListener { Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show() }
-                        .addOnFailureListener { Toast.makeText(this, "게시글 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show() }
-
-                    finish()
-                }
+                        // storage에 이미지 저장
+                        storageReference?.child("itemImages")?.child(imageFileName)?.putFile(uri)?.addOnCompleteListener { task ->
+                            if(task.isSuccessful) {
+                                // 성공했을 경우, storage에 저장된 이미지를 다운 받을 수 있게 하는 url을 가져옴. 그 값을 리스트에 저장
+                                storageReference.child("itemImages").child(imageFileName).downloadUrl.addOnCompleteListener { task2 ->
+                                    counter++
+                                    if(task2.isSuccessful) {
+                                        firebasePhotoUriList.add(task2.result.toString())
+                                    } else {
+                                        // 만약 이미지는 저장이 됐지만 서버 오류등으로 이미지 url을 가져오지 못했다면, 이미지 삭제 및 토스트 메세지 띄움
+                                        storageReference.child("itemImages").child(imageFileName).delete()
+                                        Toast.makeText(this@WriteUsedActivity, "일부 사진을 저장할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                                    }
+                                    if(counter == photoUriList.size) {
+                                        saveImageToFireStore()
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(this@WriteUsedActivity, "일부 사진을 업로드할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                                counter++
+                            }
+                        }
+                    }
+                } else saveImageToFireStore()
             }
+        }
+    }
+
+    // 글의 정보를 데이터베이스에 저장
+    fun saveImageToFireStore() {
+        val uid = auth?.currentUser!!.uid
+        fireStore!!.collection("users").document(uid).get().addOnSuccessListener {
+            val userName = it["userName"].toString()
+            val type = 1
+            val title = write_used_title_input.text.toString()
+            val category = write_used_category_text.text.toString()
+            val location = location!!
+            val content = write_used_content_input.text.toString()
+            val price = write_used_price_input.text.toString()
+            val isPossibleSuggestion = isPossibleSuggestion
+
+            val item = DataItem(
+                userName,
+                type,
+                title,
+                category,
+                location,
+                content,
+                if (price == "") null else price.toInt(),
+                photos = firebasePhotoUriList,
+                isPossibleSuggestion = isPossibleSuggestion
+            )
+
+            fireStore!!.collection("UsedItems").document().set(item)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "게시글 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                }
+
+            finish()
         }
     }
 }
