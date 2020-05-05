@@ -13,6 +13,7 @@ import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_uploaded_item.view.*
 
@@ -38,7 +39,7 @@ class HomeFragment: Fragment() {
         var itemList = mutableListOf<DataItem>()
 
         init {
-            fireStore.collection("UsedItems").orderBy("timeStamp").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            fireStore.collection("UsedItems").orderBy("timeStamp", Query.Direction.DESCENDING).addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if(firebaseFirestoreException != null) { return@addSnapshotListener }
                 itemList.clear()
 

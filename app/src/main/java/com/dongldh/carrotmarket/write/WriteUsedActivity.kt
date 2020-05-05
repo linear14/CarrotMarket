@@ -206,6 +206,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
             write_used_title_input.text.isEmpty() -> Toast.makeText(this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show()
             write_used_category_text.text.toString() == "카테고리" -> Toast.makeText(this, "카테고리를 선택해주세요", Toast.LENGTH_SHORT).show()
             write_used_content_input.text.length < 15 -> Toast.makeText(this, "내용이 너무 짧습니다", Toast.LENGTH_SHORT).show()
+            write_used_price_input.text.toString().toInt() > 2000000000 -> Toast.makeText(this, "20억 이하의 가격을 입력해주세요", Toast.LENGTH_SHORT).show()
             else -> {
                 val uid = auth?.currentUser!!.uid
 
