@@ -13,7 +13,7 @@ data class DataUser(var phone: String = "test", var userName: String = "로그�
 // 초기값 설정 안해주면 파이어베이스에서 오류 발생..
 data class DataItem(val userName: String? = null, val type: Int? = null, val title: String? = null,
                     val category: String? = null, val location: String? = null, val content: String? = null,
-                    val price: Int? = null, val phone: String? = null,
+                    val price: Int? = 0, val phone: String? = null,
                     val photos: List<String>? = null,
                     val isPossibleSuggestion: Boolean? = null, val isPossibleChat: Boolean? = null,
                     val timeStamp: Long = System.currentTimeMillis())

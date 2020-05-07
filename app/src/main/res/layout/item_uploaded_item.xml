@@ -15,6 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="16dp"
         android:src="@mipmap/ic_launcher"
+        android:scaleType="centerCrop"
         android:background="@drawable/decorate_imageview_corner_rounding" />
 
     <TextView

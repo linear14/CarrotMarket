@@ -69,7 +69,7 @@ class HomeFragment: Fragment() {
                 in 0 until 60 * 1000 -> time = "방금 전"
                 in 60 * 1000 until 60 * 60 * 1000 -> time = "${timePassed / 60000}분 전"
                 in 60 * 60 * 1000 until 24 * 60 * 60 * 1000 -> time = "${timePassed / 3600000}시간 전"
-                else -> time = "${timePassed / 24 * 3600000}일 전"
+                else -> time = "${timePassed / (24 * 3600000)}일 전"
             }
 
             // 저장된 사진이 없다면 기본 이미지를 등록, 있다면 사진 모음의 첫 사진을 등록
@@ -82,7 +82,9 @@ class HomeFragment: Fragment() {
 
             holder.title.text = item.title
             holder.location.text = "${item.location} · $time"
-            holder.price.text = "${String.format("%,d", item.price)}원"
+
+            if(item.price == 0) holder.price.text = "무료나눔"
+            else holder.price.text = "${String.format("%,d", item.price)}원"
         }
     }
 }
