@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataItem
+import com.dongldh.carrotmarket.transaction.DetailFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_uploaded_item.view.*
 
@@ -85,6 +87,30 @@ class HomeFragment: Fragment() {
 
             if(item.price == 0) holder.price.text = "무료나눔"
             else holder.price.text = "${String.format("%,d", item.price)}원"
+
+            holder.itemView.setOnClickListener {
+                val fragment = DetailFragment()
+                val bundle = Bundle()
+
+                bundle.putString("title", item.title)
+                bundle.putString("userName", item.userName)
+                bundle.putString("location", item.location)
+                bundle.putString("category", item.category)
+                bundle.putString("time", time)
+                bundle.putString("content", item.content)
+                bundle.putInt("price", item.price ?: 0)
+                if(item.type == 1) {
+                    bundle.putBoolean("isPossibleSuggestion", item.isPossibleSuggestion!!)
+                } else {
+                    bundle.putBoolean("isPossibleChat", item.isPossibleChat!!)
+                }
+
+                fragment.arguments = bundle
+
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.detail_content, fragment)?.commit()
+                activity?.findViewById<View>(R.id.detail_content)?.visibility = View.VISIBLE
+                activity?.findViewById<View>(R.id.bottom_navigation)?.visibility = View.GONE
+            }
         }
     }
 }
