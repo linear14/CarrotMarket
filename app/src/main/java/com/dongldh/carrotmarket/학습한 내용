@@ -178,3 +178,7 @@ Task is not yet complete 관련 오류 발생시 -> addOnSuccessListener 를 달
 1. 이미지를 storage를 넣는 방법에 대한 학습 진행. (특히, 여러 이미지를 저장하고 downloadUrl을 리스트에 담는 방법에 대한 학습을 했다는 것이 중요)
 https://github.com/abhidiwakar/FirebaseStorageMultipleFilesUpload/blob/master/app/src/main/java/tech/fadedib/firebasestorage_multiplefilesupload/MainActivity.java
 https://www.youtube.com/watch?v=b0WUt3gfNCI
+
+20.05.09 토
+1. Indicator custom (DetailFragment, CircleIndicator, indicator_dot_off.xml, on.xml)
+2. ViewPager Image Slider

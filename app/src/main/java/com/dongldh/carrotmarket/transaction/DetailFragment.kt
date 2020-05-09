@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.text.Layout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +20,11 @@ import kotlinx.android.synthetic.main.fragment_show_item_detail.view.*
 import kotlinx.android.synthetic.main.viewpager_detail_image.*
 
 class DetailFragment: Fragment(), View.OnClickListener {
+    lateinit var photos: ArrayList<String>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_show_item_detail, container, false)
 
+        photos = arguments?.getStringArrayList("photos")!!
         val userName = arguments?.getString("userName")
         val location = arguments?.getString("location")
         val title = arguments?.getString("title")
@@ -32,6 +35,17 @@ class DetailFragment: Fragment(), View.OnClickListener {
         val price = arguments?.getInt("price")
 
         view.viewPager.adapter = ViewPagerAdapter()
+        
+        // viewPager의 위치가 변할 때 호출되는 리스너
+        view.viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageSelected(position: Int) { circleIndicator.selectDot(position) }
+        })
+        
+        // 원에 대한 갯수 설정 및 on_off 이미지 설정
+        view.circleIndicator.createDotPanel(photos.size, R.drawable.indicator_dot_off, R.drawable.indicator_dot_on, 0)
+
         view.detail_profile_name.text = userName
         view.detail_profile_location.text = location
         view.detail_item_info_title_text.text = title
@@ -73,7 +87,7 @@ class DetailFragment: Fragment(), View.OnClickListener {
     // 이미지 슬라이더를 만들기 위한 뷰 페이저 어댑터
     inner class ViewPagerAdapter: PagerAdapter() {
         private var layoutInflater: LayoutInflater? = null
-        val photos = arguments?.getStringArrayList("photos")
+
 
         override fun isViewFromObject(view: View, `object`: Any): Boolean {
             return view === `object`

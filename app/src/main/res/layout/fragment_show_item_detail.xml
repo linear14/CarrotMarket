@@ -83,6 +83,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <com.dongldh.carrotmarket.CircleIndicator
+                android:id="@+id/circleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/viewPager"
+                android:layout_marginBottom="32dp"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/detail_profile_layout"
                 android:layout_width="match_parent"
