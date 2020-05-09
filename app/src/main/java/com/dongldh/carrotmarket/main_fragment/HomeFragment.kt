@@ -1,8 +1,6 @@
 package com.dongldh.carrotmarket.main_fragment
 
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,6 @@ import com.dongldh.carrotmarket.transaction.DetailFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_uploaded_item.view.*
 
@@ -67,7 +64,7 @@ class HomeFragment: Fragment() {
             val item = itemList[position]
 
             // 게시글 올린 시간과 현재 시간과의 차이를 문자열로 바꾸어줌
-            var time = ""
+            val time: String
             when(val timePassed = System.currentTimeMillis() - item.timeStamp) {
                 in 0 until 60 * 1000 -> time = "방금 전"
                 in 60 * 1000 until 60 * 60 * 1000 -> time = "${timePassed / 60000}분 전"
@@ -84,10 +81,12 @@ class HomeFragment: Fragment() {
             }
 
             holder.title.text = item.title
-            holder.location.text = "${item.location} · $time"
+            holder.location.text = getString(R.string.item_location_text)
+                .replace("xx", item.location!!)
+                .replace("yy", time)
 
             if(item.price == 0) holder.price.text = "무료나눔"
-            else holder.price.text = "${String.format("%,d", item.price)}원"
+            else holder.price.text = getString(R.string.item_price_text).replace("xx", String.format("%,d", item.price))
 
             holder.itemView.setOnClickListener {
                 val fragment = DetailFragment()

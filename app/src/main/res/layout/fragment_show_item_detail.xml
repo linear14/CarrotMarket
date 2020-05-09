@@ -28,6 +28,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/detail_toolbar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/detail_back_image"
+                app:layout_constraintEnd_toStartOf="@id/detail_share_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="16dp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
             <ImageView
                 android:id="@+id/detail_share_image"
                 android:layout_width="30dp"
@@ -43,16 +57,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="16dp"
                 android:src="@mipmap/ic_launcher"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/setting_image"
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_setting"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    android:text="사용자 이름"
+                    android:text="@string/detail_profile_name"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/detail_profile_location"
@@ -127,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    android:text="지역"
+                    android:text="@string/detail_profile_location"
                     android:textColor="@color/colorDarkText"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -160,7 +164,7 @@
                     android:id="@+id/detail_item_info_title_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="에어팟 케이스"
+                    android:text="@string/detail_item_info_title_text"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +176,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="기타 중고물품 · 10분 전"
+                    android:text="@string/detail_item_info_category_time_text"
                     android:textColor="@color/colorDarkText"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -184,7 +188,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="내용이지롱\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+                    android:text="@string/detail_item_info_content_text"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -205,7 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingEnd="16dp"
-                        android:text="채팅 0개"
+                        android:text="@string/detail_contact_chat_count_text"
                         android:textColor="@color/colorDarkText" />
 
                     <TextView
@@ -213,7 +217,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingEnd="16dp"
-                        android:text="관심 0"
+                        android:text="@string/detail_contact_favorite_count_text"
                         android:textColor="@color/colorDarkText" />
 
                     <TextView
@@ -221,7 +225,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingEnd="16dp"
-                        android:text="조회 100"
+                        android:text="@string/detail_contact_look_count_text"
                         android:textColor="@color/colorDarkText" />
 
                 </LinearLayout>
@@ -243,7 +247,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="이 게시글 신고하기"
+                android:text="@string/detail_report_text"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/line3"
@@ -275,7 +279,7 @@
                     android:id="@+id/detail_other_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="xx님의 판매 상품"
+                    android:text="@string/detail_other_text"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -285,7 +289,7 @@
                     android:id="@+id/detail_other_all_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="모두보기"
+                    android:text="@string/detail_other_all_text"
                     android:textColor="@color/colorDarkText"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -349,7 +353,7 @@
             android:id="@+id/detail_price_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7000원"
+            android:text="@string/detail_price_text"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/detail_possible_suggestion_text"
@@ -360,7 +364,7 @@
             android:id="@+id/detail_possible_suggestion_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="가격제안 불가"
+            android:text="@string/detail_possible_suggestion_text"
             android:textColor="@color/colorDarkText"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -373,7 +377,7 @@
             android:layout_height="40dp"
             android:background="@drawable/decorate_button_active"
             android:paddingHorizontal="16dp"
-            android:text="채팅으로 거래하기"
+            android:text="@string/detail_transaction_with_chat_button"
             android:textColor="@color/colorDefaultBackground"
             android:textSize="18sp"
             android:textStyle="bold"

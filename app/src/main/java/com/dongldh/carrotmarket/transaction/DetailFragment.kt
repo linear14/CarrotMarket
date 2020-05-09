@@ -3,8 +3,6 @@ package com.dongldh.carrotmarket.transaction
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +12,8 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_show_item_detail.*
 import kotlinx.android.synthetic.main.fragment_show_item_detail.view.*
-import kotlinx.android.synthetic.main.viewpager_detail_image.*
 
 class DetailFragment: Fragment(), View.OnClickListener {
     lateinit var photos: ArrayList<String>
@@ -49,22 +45,26 @@ class DetailFragment: Fragment(), View.OnClickListener {
         view.detail_profile_name.text = userName
         view.detail_profile_location.text = location
         view.detail_item_info_title_text.text = title
-        view.detail_item_info_category_time_text.text = "$category · $time"
+        view.detail_toolbar_title.text = title
+        view.detail_item_info_category_time_text.text = getString(R.string.detail_item_info_category_time_text)
+            .replace("xx", category?:"category null 오류 - DetailFragment")
+            .replace("yy", time?:"time null 오류 - DetailFragment")
         view.detail_item_info_content_text.text = content
+        view.detail_other_text.text = getString(R.string.detail_other_text).replace("xx", userName?: "userName null 오류 - DetailFragment")
 
         if(type == 1) {
             if (price == 0) {
                 view.detail_price_text.text = "무료나눔"
                 view.detail_possible_suggestion_text.visibility = View.GONE
             } else {
-                view.detail_price_text.text = "${String.format("%,d", price)}원"
+                view.detail_price_text.text = getString(R.string.detail_price_text).replace("xx", String.format("%,d", price))
                 view.detail_possible_suggestion_text.text = if (arguments?.getBoolean("possibleSuggestion", true)!!) "가격제안 가능" else "가격제안 불가"
             }
         } else {
             if (price == 0) {
                 view.detail_price_text.text = "가격없음"
             } else {
-                view.detail_price_text.text = "${String.format("%,d", price)}원"
+                view.detail_price_text.text = getString(R.string.detail_price_text).replace("xx", String.format("%,d", price))
             }
             view.detail_possible_suggestion_text.visibility = View.GONE
         }
@@ -94,7 +94,7 @@ class DetailFragment: Fragment(), View.OnClickListener {
         }
 
         override fun getCount(): Int {
-            return photos?.size?:0
+            return photos.size
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -103,7 +103,7 @@ class DetailFragment: Fragment(), View.OnClickListener {
             val image = view.findViewById<ImageView>(R.id.detail_viewpager_imageview)
 
             Glide.with(context!!)
-                .load(Uri.parse(photos!![position]))
+                .load(Uri.parse(photos[position]))
                 .into(image)
 
             // image!!.setImageURI(Uri.parse(photos!![position]))
