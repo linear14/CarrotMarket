@@ -14,6 +14,6 @@ data class DataUser(var phone: String = "test", var userName: String = "로그�
 data class DataItem(val userName: String? = null, val type: Int? = null, val title: String? = null,
                     val category: String? = null, val location: String? = null, val content: String? = null,
                     val price: Int? = 0, val phone: String? = null,
-                    val photos: List<String>? = null,
-                    val isPossibleSuggestion: Boolean? = null, val isPossibleChat: Boolean? = null,
+                    val photos: ArrayList<String>? = null,
+                    val possibleSuggestion: Boolean? = null, val possibleChat: Boolean? = null,
                     val timeStamp: Long = System.currentTimeMillis())

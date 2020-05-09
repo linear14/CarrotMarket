@@ -46,7 +46,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
     var location: String? = null    // 등록되는 지역
     var locationNear: String? = null    // 몇 칸 떨어진 거리까지 허용 가능한가에 대한 변수
     var photoUriList = mutableListOf<Uri>()   // 받아온 사진 Uri
-    var firebasePhotoUriList = mutableListOf<String>() // 사진 Uri를 string으로 바꿈 - 파이어베이스는 String형의 list만 허용 가능하므로
+    var firebasePhotoUriList = arrayListOf<String>() // 사진 Uri를 string으로 바꿈 - 파이어베이스는 String형의 list만 허용 가능하므로
 
     var isPossibleSuggestion = true // 가격 제안 가능?
     var counter = 0 // 업로드 성공, 혹은 실패 처리 된 이미지의 수를 카운팅.
@@ -268,7 +268,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                 content,
                 if (price == "") null else price.toInt(),
                 photos = firebasePhotoUriList,
-                isPossibleSuggestion = isPossibleSuggestion
+                possibleSuggestion = isPossibleSuggestion
             )
 
             fireStore!!.collection("UsedItems").document().set(item)

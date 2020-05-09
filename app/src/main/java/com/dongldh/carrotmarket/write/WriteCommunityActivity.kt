@@ -37,8 +37,7 @@ class WriteCommunityActivity : AppCompatActivity(), View.OnClickListener {
 
     var location: String? = null
     var photoUriList = mutableListOf<Uri>()   // 받아온 사진 Uri
-    var firebasePhotoUriList =
-        mutableListOf<String>() // 사진 Uri를 string으로 바꿈 - 파이어베이스는 String형의 list만 허용 가능하므로
+    var firebasePhotoUriList = arrayListOf<String>() // 사진 Uri를 string으로 바꿈 - 파이어베이스는 String형의 list만 허용 가능하므로
 
     var isPossibleChat = true   // 번호 입력 시 채팅 가능 여부 설정
     var counter = 0 // 업로드 성공, 혹은 실패 처리 된 이미지의 수를 카운팅.
@@ -278,7 +277,7 @@ class WriteCommunityActivity : AppCompatActivity(), View.OnClickListener {
                 if (price == "") null else price.toInt(),
                 phone,
                 photos = firebasePhotoUriList,
-                isPossibleChat = isPossibleChat
+                possibleChat = isPossibleChat
             )
 
             fireStore!!.collection("UsedItems").document().set(item)

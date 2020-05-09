@@ -2,6 +2,7 @@ package com.dongldh.carrotmarket.main_fragment
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -99,11 +100,11 @@ class HomeFragment: Fragment() {
                 bundle.putString("time", time)
                 bundle.putString("content", item.content)
                 bundle.putInt("price", item.price ?: 0)
-                if(item.type == 1) {
-                    bundle.putBoolean("isPossibleSuggestion", item.isPossibleSuggestion!!)
-                } else {
-                    bundle.putBoolean("isPossibleChat", item.isPossibleChat!!)
-                }
+                bundle.putInt("type", item.type!!)
+                bundle.putStringArrayList("photos", item.photos)
+
+                if(item.type == 1) bundle.putBoolean("possibleSuggestion", item.possibleSuggestion!!)
+                else bundle.putBoolean("possibleChat", item.possibleChat!!)
 
                 fragment.arguments = bundle
 
