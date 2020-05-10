@@ -12,11 +12,16 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_show_item_detail.*
 import kotlinx.android.synthetic.main.fragment_show_item_detail.view.*
 
 class DetailFragment: Fragment(), View.OnClickListener {
     lateinit var photos: ArrayList<String>
+    val auth = FirebaseAuth.getInstance()
+    val fireStore = FirebaseFirestore.getInstance()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_show_item_detail, container, false)
 

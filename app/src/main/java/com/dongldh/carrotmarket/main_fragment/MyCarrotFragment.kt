@@ -1,11 +1,14 @@
 package com.dongldh.carrotmarket.main_fragment
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.App
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataUser
@@ -24,6 +27,12 @@ class MyCarrotFragment: Fragment(), View.OnClickListener {
 
         view.profile_name.text = arguments?.getString("userName")
         view.profile_location.text = arguments?.getString("location")
+        // Log.d("ArgumentTest", arguments?.getString("profileImage"))
+        if(arguments?.getString("profileImage") != "default") {
+            Glide.with(activity?.applicationContext!!)
+                .load(Uri.parse(arguments?.getString("profileImage")))
+                .into(view.profile_image)
+        }
         view.app_setting_layout.setOnClickListener(this)
         return view
     }

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.database.DataUser
 import com.dongldh.carrotmarket.database.PICK_IMAGE_FROM_ALBUM
 import com.google.firebase.auth.FirebaseAuth
@@ -100,7 +101,9 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
             PICK_IMAGE_FROM_ALBUM -> {
                 if(resultCode == Activity.RESULT_OK) {
                     val profileImageUri = data?.data!!
-                    profile_image.setImageURI(profileImageUri)
+                    Glide.with(this)
+                        .load(profileImageUri)
+                        .into(profile_image)
                     profileImage = profileImageUri.toString()
                 }
             }
@@ -112,7 +115,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
         val phone = phoneNumber!!
         val userName = nickname_input.text.toString()
         val location = App.preference.location ?: "이건 null 일 수가 없어 - 오류발생~~!"
-        val dataUser = DataUser(phone, userName, location, profileImage?:"defaultImageUri 나중에 추가")
+        val dataUser = DataUser(phone, userName, location, profileImage?:"default")
 
         // Log.d("profile", "uid: $uid, phone: $phone")
         fireStore.collection("users").document(uid).set(dataUser)
