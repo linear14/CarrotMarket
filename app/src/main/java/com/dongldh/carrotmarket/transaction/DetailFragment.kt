@@ -12,6 +12,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
+import com.dongldh.carrotmarket.database.DataUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_show_item_detail.*
@@ -21,6 +22,7 @@ class DetailFragment: Fragment(), View.OnClickListener {
     lateinit var photos: ArrayList<String>
     val auth = FirebaseAuth.getInstance()
     val fireStore = FirebaseFirestore.getInstance()
+    lateinit var user: DataUser
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_show_item_detail, container, false)
@@ -47,8 +49,21 @@ class DetailFragment: Fragment(), View.OnClickListener {
         // 원에 대한 갯수 설정 및 on_off 이미지 설정
         view.circleIndicator.createDotPanel(photos.size, R.drawable.indicator_dot_off, R.drawable.indicator_dot_on, 0)
 
-        view.detail_profile_name.text = userName
-        view.detail_profile_location.text = location
+        // 파이어베이스 document 조건 걸어서 모두 가져오기
+        fireStore.collection("users")
+            .whereEqualTo("userName", userName)
+            .get()
+            .addOnSuccessListener {
+                for(document in it) {
+                    user = document.toObject(DataUser::class.java)
+                    view.detail_profile_name.text = user.userName
+                    view.detail_profile_location.text = user.location
+                    Glide.with(activity?.applicationContext!!)
+                        .load(Uri.parse(user.profileImage))
+                        .into(view.detail_profile_image)
+                }
+            }
+
         view.detail_item_info_title_text.text = title
         view.detail_toolbar_title.text = title
         view.detail_item_info_category_time_text.text = getString(R.string.detail_item_info_category_time_text)

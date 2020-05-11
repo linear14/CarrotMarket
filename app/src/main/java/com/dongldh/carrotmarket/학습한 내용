@@ -187,3 +187,7 @@ https://www.youtube.com/watch?v=b0WUt3gfNCI
 
 20.05.10 일
 1. 기본 프로필 이미지 출처 Icons made by <a href="https://www.flaticon.com/authors/monkik" title="monkik">monkik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+
+20.05.11 월
+1. 파이어베이스 document 조건 걸어서 모두 가져오기 (https://firebase.google.com/docs/firestore/query-data/get-data?hl=ko#kotlin_4)
+- DetailFragment
