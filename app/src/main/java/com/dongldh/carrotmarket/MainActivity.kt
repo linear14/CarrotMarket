@@ -19,6 +19,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_carrot.view.*
 
+// fragment가 중첩되어 있는 상태일 경우 true 부여. true인 상태에서는 뒤로가는 버튼 누를 경우 이전 프래그먼트로 돌아가야함
+var nestedFragmentState = false
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     var auth: FirebaseAuth? = FirebaseAuth.getInstance()
     val fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_home -> {
+                nestedFragmentState = false
                 val homeFragment = HomeFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.main_content, homeFragment)
                     .commit()
@@ -134,11 +137,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     // 뒤로가기 버튼 눌렀을 경우
     var currentTime = System.currentTimeMillis()
     override fun onBackPressed() {
-        if(System.currentTimeMillis() - currentTime > 2000) {
-            currentTime = System.currentTimeMillis()
-            Toast.makeText(this, "'뒤로'버튼 한 번 더 누르면 종료", Toast.LENGTH_SHORT).show()
+        // true일 경우 이전 프래그먼트로 돌아오기, false일 경우 메인 화면이므로 버튼 두 번 눌러 앱 종료 구현
+        if(nestedFragmentState) {
+            nestedFragmentState = false
+            currentTime = 0
+            findViewById<View>(R.id.detail_content)?.visibility = View.GONE
+            findViewById<View>(R.id.bottom_navigation)?.visibility = View.VISIBLE
         } else {
-            super.onBackPressed()
+            if (System.currentTimeMillis() - currentTime > 2000) {
+                currentTime = System.currentTimeMillis()
+                Toast.makeText(this, "'뒤로'버튼 한 번 더 누르면 종료", Toast.LENGTH_SHORT).show()
+            } else {
+                super.onBackPressed()
+            }
         }
     }
 

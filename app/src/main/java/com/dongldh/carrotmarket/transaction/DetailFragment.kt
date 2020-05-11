@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataUser
+import com.dongldh.carrotmarket.nestedFragmentState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_show_item_detail.*
@@ -97,6 +98,7 @@ class DetailFragment: Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v) {
             detail_back_image -> {
+                nestedFragmentState = false
                 activity?.findViewById<View>(R.id.detail_content)?.visibility = View.GONE
                 activity?.findViewById<View>(R.id.bottom_navigation)?.visibility = View.VISIBLE
             }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataItem
+import com.dongldh.carrotmarket.nestedFragmentState
 import com.dongldh.carrotmarket.transaction.DetailFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -89,6 +90,7 @@ class HomeFragment: Fragment() {
             else holder.price.text = getString(R.string.item_price_text).replace("xx", String.format("%,d", item.price))
 
             holder.itemView.setOnClickListener {
+                nestedFragmentState = true
                 val fragment = DetailFragment()
                 val bundle = Bundle()
 
