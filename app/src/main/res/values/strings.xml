@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">carrotMarket</string>
+    <string name="app_name">CARROT</string>
 
     <!-- SignActivity -->
     <string name="sign_upin">회원가입/로그인</string>
@@ -150,5 +150,9 @@
     <string name="item_title_text">제목</string>
     <string name="item_location_text">xx · yy</string>
     <string name="item_price_text">xx원</string>
+
+    <!-- SettingMainActivity -->
+    <string name="setting_title"><b>설정</b></string>
+    <string name="setting_sign_out">로그아웃</string>
 
 </resources>

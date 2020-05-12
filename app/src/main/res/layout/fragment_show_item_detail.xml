@@ -44,21 +44,23 @@
 
             <ImageView
                 android:id="@+id/detail_share_image"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:src="@mipmap/ic_launcher"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/ic_share"
                 app:layout_constraintEnd_toStartOf="@id/detail_more_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <ImageView
                 android:id="@+id/detail_more_image"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="16dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/ic_menu"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -101,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewPager">
@@ -110,7 +112,6 @@
                     android:id="@+id/detail_profile_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@mipmap/ic_launcher"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -119,7 +120,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    android:text="@string/detail_profile_name"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/detail_profile_location"
@@ -131,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
-                    android:text="@string/detail_profile_location"
+
                     android:textColor="@color/colorDarkText"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -144,7 +144,7 @@
                 android:id="@+id/line1"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:background="@color/colorDarkBackground"
                 app:layout_constraintEnd_toEndOf="@id/detail_profile_layout"
                 app:layout_constraintStart_toStartOf="@id/detail_profile_layout"
@@ -175,7 +175,7 @@
                     android:id="@+id/detail_item_info_category_time_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/detail_item_info_category_time_text"
                     android:textColor="@color/colorDarkText"
                     android:textSize="14sp"
@@ -187,7 +187,7 @@
                     android:id="@+id/detail_item_info_content_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:text="@string/detail_item_info_content_text"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -198,7 +198,7 @@
                     android:id="@+id/detail_contact_info_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -236,7 +236,7 @@
                 android:id="@+id/line2"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:background="@color/colorDarkBackground"
                 app:layout_constraintEnd_toEndOf="@id/detail_profile_layout"
                 app:layout_constraintStart_toStartOf="@id/detail_profile_layout"
@@ -246,7 +246,8 @@
                 android:id="@+id/detail_report_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="24dp"
                 android:text="@string/detail_report_text"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -270,7 +271,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line3">
@@ -332,9 +333,9 @@
 
         <ImageView
             android:id="@+id/detail_favorite_image"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@mipmap/ic_launcher"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_want_unclick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

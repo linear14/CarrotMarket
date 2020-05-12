@@ -82,7 +82,7 @@
                     android:id="@+id/sell_list_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@drawable/ic_sell_list"/>
                 <TextView
                     android:id="@+id/sell_list_text"
                     android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                     android:id="@+id/buy_list_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@drawable/ic_buy_list"/>
                 <TextView
                     android:id="@+id/buy_list_text"
                     android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
                     android:id="@+id/want_list_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:src="@drawable/ic_want_list"/>
                 <TextView
                     android:id="@+id/want_list_text"
                     android:layout_width="wrap_content"
@@ -147,14 +147,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="24dp"
             android:layout_marginTop="5dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_location_setting"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,13 +169,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="24dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_location_certification"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -190,13 +190,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="24dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_keyword"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -211,13 +211,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="24dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_collect_all"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -233,13 +233,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="5dp"
-            android:padding="16dp"
+            android:padding="24dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_invite_friend"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -254,13 +254,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="24dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_share"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -275,13 +275,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="24dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_notice"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -296,13 +296,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="24dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_user_center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -317,13 +317,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="24dp"
             android:background="@color/colorDefaultBackground">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_setting"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

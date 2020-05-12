@@ -99,9 +99,9 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_add_photo" />
 
                     <TextView
                         android:id="@+id/image_count_text"
@@ -290,9 +290,9 @@
 
         <ImageView
             android:id="@+id/write_used_saved_text_call_image"
-            android:layout_width="28dp"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_save_text" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

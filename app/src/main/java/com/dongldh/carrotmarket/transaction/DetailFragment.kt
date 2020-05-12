@@ -59,9 +59,13 @@ class DetailFragment: Fragment(), View.OnClickListener {
                     user = document.toObject(DataUser::class.java)
                     view.detail_profile_name.text = user.userName
                     view.detail_profile_location.text = user.location
-                    Glide.with(activity?.applicationContext!!)
-                        .load(Uri.parse(user.profileImage))
-                        .into(view.detail_profile_image)
+                    if(user.profileImage == "default") {
+                        view.detail_profile_image.setImageResource(R.drawable.ic_profile_default)
+                    } else {
+                        Glide.with(activity?.applicationContext!!)
+                            .load(Uri.parse(user.profileImage))
+                            .into(view.detail_profile_image)
+                    }
                 }
             }
 
