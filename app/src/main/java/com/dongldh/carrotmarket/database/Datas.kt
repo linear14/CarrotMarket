@@ -6,7 +6,11 @@ import android.net.Uri
 data class DataLocation(val name: String, val row: Int, val col: Int)
 
 // 회원정보(프로필) 저장
-data class DataUser(var phone: String = "test", var userName: String = "로그인하세요", var location: String = "", var profileImage: String? = null, var locationNear: Long = 1L)
+data class DataUser(var phone: String = "test",
+                    var userName: String = "로그인하세요",
+                    var location: ArrayList<String?> = arrayListOf(""),
+                    var profileImage: String? = null,
+                    var locationNear: ArrayList<Long?> = arrayListOf(1L))
 
 // 상품 등록 시 필요한 데이터 저장
 // type : 1 -> 중고물품 거래,  2 -> 지역 홍보

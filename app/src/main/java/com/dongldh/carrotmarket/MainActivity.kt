@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 if(auth?.currentUser == null) {
                     title_text.text = App.preference.location
                 } else {
-                    title_text.text = user.location
+                    title_text.text = user.location[App.preference.nowSelected]
                 }
                 selected_location_image.visibility = View.VISIBLE
                 search_image.visibility = View.VISIBLE
@@ -82,8 +82,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 else {
                     val dialog = WriteBottomSheetDialog()
                     val bundle = Bundle()
-                    bundle.putString("location", user.location)
-                    bundle.putString("locationNear", user.locationNear.toString())
+                    bundle.putString("location", user.location[App.preference.nowSelected])
+                    bundle.putString("locationNear", user.locationNear[App.preference.nowSelected].toString())
                     dialog.arguments = bundle
                     dialog.show(supportFragmentManager, "dialog_bottom")
                 }
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 val bundle = Bundle()
                 bundle.putString("phone", user.phone)
                 bundle.putString("userName", user.userName)
-                bundle.putString("location", user.location)
+                bundle.putString("location", user.location[App.preference.nowSelected])
                 bundle.putString("profileImage", user.profileImage)
 
                 val myCarrotFragment = MyCarrotFragment()
@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 user.locationNear = item.locationNear
 
                 // 기본적으로 title_text는 회원의 지역정보를 반영한다.
-                title_text.text = user.location
+                title_text.text = user.location[App.preference.nowSelected]
             }
         }
     }

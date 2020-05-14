@@ -114,8 +114,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
         // 회원 정보를 firestore database에 저장
         val phone = phoneNumber!!
         val userName = nickname_input.text.toString()
-        val location = App.preference.location ?: "이건 null 일 수가 없어 - 오류발생~~!"
-        val dataUser = DataUser(phone, userName, location, profileImage?:"default")
+        val location = App.preference.location!!
+        val dataUser = DataUser(phone, userName, arrayListOf(location), profileImage?:"default")
 
         // Log.d("profile", "uid: $uid, phone: $phone")
         fireStore.collection("users").document(uid).set(dataUser)

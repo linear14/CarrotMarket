@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
+import com.dongldh.carrotmarket.App
 import com.dongldh.carrotmarket.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -54,7 +55,11 @@ class SettingLocationActivity : AppCompatActivity() {
         // 특별한 조작을 하지 않아도 MainActivity에서의 DataUser의 정보가 바뀌는 아주 편리한 상황이 생긴다.
         back_image.setOnClickListener {
             val uid = auth.currentUser!!.uid
-            fireStore.collection("users").document(uid).update("locationNear", locationNear)
+            fireStore.collection("users").document(uid).get().addOnSuccessListener {
+                val locationNearList = it["locationNear"] as ArrayList<Long?>
+                locationNearList[App.preference.nowSelected] = locationNear
+                fireStore.collection("users").document(uid).update("locationNear", locationNearList)
+            }
 
             val intent = Intent()
             intent.putExtra("locationNear", locationNear.toString())

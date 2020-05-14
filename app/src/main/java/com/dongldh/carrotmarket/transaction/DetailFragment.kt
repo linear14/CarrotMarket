@@ -58,7 +58,7 @@ class DetailFragment: Fragment(), View.OnClickListener {
                 for(document in it) {
                     user = document.toObject(DataUser::class.java)
                     view.detail_profile_name.text = user.userName
-                    view.detail_profile_location.text = user.location
+                    view.detail_profile_location.text = location
                     if(user.profileImage == "default") {
                         view.detail_profile_image.setImageResource(R.drawable.ic_profile_default)
                     } else {
@@ -132,7 +132,6 @@ class DetailFragment: Fragment(), View.OnClickListener {
                 .load(Uri.parse(photos[position]))
                 .into(image)
 
-            // image!!.setImageURI(Uri.parse(photos!![position]))
             val viewPager = container as ViewPager
             viewPager.addView(view, 0)
 
