@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.dongldh.carrotmarket.database.DataUser
+import com.dongldh.carrotmarket.dialog.ChangeLocationDialog
 import com.dongldh.carrotmarket.dialog.SuggestLoginDialog
 import com.dongldh.carrotmarket.dialog.WriteBottomSheetDialog
 import com.dongldh.carrotmarket.main_fragment.CategoryFragment
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_my_carrot.view.*
 
 // fragment가 중첩되어 있는 상태일 경우 true 부여. true인 상태에서는 뒤로가는 버튼 누를 경우 이전 프래그먼트로 돌아가야함
 var nestedFragmentState = false
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     var auth: FirebaseAuth? = FirebaseAuth.getInstance()
     val fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -32,11 +34,23 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Log.d("LifeCycle", "MainActivity_onCreate()")
 
         getUserInfo()
+        selected_location_layout.setOnClickListener(this)
         bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.selectedItemId = R.id.action_home
 
         // 만약 세션 유지 된 계정이 존재하지 않는다면 Dialog를 띄워서 로그인 / 회원가입을 권유한다.
         if(auth?.currentUser == null) showSuggestLoginDialog()
+    }
+
+
+    override fun onClick(v: View?) {
+        when(v) {
+            selected_location_layout -> {
+                val changeLocationDialog = ChangeLocationDialog()
+                // changeLocationDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
+                changeLocationDialog.show(supportFragmentManager, "dialog_fragment")
+            }
+        }
     }
 
     // BottomNavigation 선택시 화면 전환

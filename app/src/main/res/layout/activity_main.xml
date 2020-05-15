@@ -23,6 +23,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/selected_location_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="16dp"
@@ -38,17 +39,17 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/selected_location_image"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_arrow_down"
-                    app:layout_constraintEnd_toStartOf="@id/location_setting_image"
-                    app:layout_constraintTop_toTopOf="parent" />
+               <ImageView
+                   android:id="@+id/selected_location_image"
+                   android:layout_width="20dp"
+                   android:layout_height="20dp"
+                   android:layout_gravity="center"
+                   android:layout_marginLeft="8dp"
+                   android:src="@drawable/ic_arrow_down"
+                   app:layout_constraintEnd_toStartOf="@id/location_setting_image"
+                   app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+           </LinearLayout>
 
             <ImageView
                 android:id="@+id/search_image"

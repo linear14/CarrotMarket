@@ -5,10 +5,7 @@ import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.dongldh.carrotmarket.App
@@ -23,6 +20,7 @@ import kotlinx.android.synthetic.main.dialog_write_used_category.view.*
 class WriteCommunityCategoryDialog(val text: TextView): DialogFragment(), View.OnClickListener {
     var category = "카테고리"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         val view = inflater.inflate(R.layout.dialog_write_community_category, container, false)
 
         view.category_car.setOnClickListener(this)
