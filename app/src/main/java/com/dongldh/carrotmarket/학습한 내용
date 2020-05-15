@@ -199,3 +199,4 @@ https://www.youtube.com/watch?v=b0WUt3gfNCI
     - 여기서 if의 조건은 빼도 괜찮음
    툴바의 높이찾기 (https://gist.github.com/hamakn/8939eb68a920a6d7a498)
 4. 다이얼로그 외부 영역 투명하게 만들기 (https://altongmon.tistory.com/782)
+5. 스낵바 사용. 프래그먼트에서 사용시 바텀 네비게이션에 겹치는 현상 수정

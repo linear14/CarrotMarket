@@ -26,6 +26,7 @@ var nestedFragmentState = false
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     var auth: FirebaseAuth? = FirebaseAuth.getInstance()
     val fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    var isLoading = true // 처음 시작할 때 데이터를 받아오는 중인지를 확인
 
     val user = DataUser()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +48,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         when(v) {
             selected_location_layout -> {
                 val changeLocationDialog = ChangeLocationDialog()
-                // changeLocationDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
+                val bundle = Bundle()
+                bundle.putStringArrayList("location", user.location)
+                changeLocationDialog.arguments = bundle
                 changeLocationDialog.show(supportFragmentManager, "dialog_fragment")
             }
         }
@@ -66,7 +69,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 if(auth?.currentUser == null) {
                     title_text.text = App.preference.location
                 } else {
-                    title_text.text = user.location[App.preference.nowSelected]
+                    if(!isLoading) title_text.text = user.location[App.preference.nowSelected]
                 }
                 selected_location_image.visibility = View.VISIBLE
                 search_image.visibility = View.VISIBLE
@@ -193,6 +196,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
                 // 기본적으로 title_text는 회원의 지역정보를 반영한다.
                 title_text.text = user.location[App.preference.nowSelected]
+                isLoading = false
             }
         }
     }

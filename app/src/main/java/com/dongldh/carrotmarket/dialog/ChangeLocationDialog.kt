@@ -8,12 +8,18 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dongldh.carrotmarket.App
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.SignActivity
+import com.dongldh.carrotmarket.database.FROM_CHANGE_LOCATION_TO_SETTING_LOCATION
+import com.dongldh.carrotmarket.setting.SettingLocationActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_change_location.view.*
 import kotlinx.android.synthetic.main.item_change_location.view.*
 
@@ -63,8 +69,10 @@ class ChangeLocationDialog: DialogFragment() {
         val view = inflater.inflate(R.layout.dialog_change_location, container, false)
         isCancelable = true
 
-        list.add("지역 1")
-        list.add("지역 2")
+        // MainActivity에서 location 정보를 받아온뒤, list에 뿌려줌.
+        val location = arguments?.getStringArrayList("location")!!
+        list.add(location[0])
+        if(location.size == 2) list.add(location[1])
         list.add("내 동네 설정")
 
         view.change_location_recycler.layoutManager = LinearLayoutManager(activity)
@@ -90,6 +98,28 @@ class ChangeLocationDialog: DialogFragment() {
         override fun onBindViewHolder(holder: ChangeLocationViewHolder, position: Int) {
             val item = list[position]
             holder.location.text = item
+
+            holder.location.setOnClickListener {
+                if(holder.location.text == "내 동네 설정") {
+                    val intent = Intent(activity, SettingLocationActivity::class.java)
+                    startActivityForResult(intent, FROM_CHANGE_LOCATION_TO_SETTING_LOCATION)
+                    dismiss()
+                } else {
+                    activity?.findViewById<TextView>(R.id.title_text)?.text = holder.location.text.toString()
+                    App.preference.nowSelected = position
+
+                    // snackBar를 main_fragment를 대상뷰로 띄우면 bottomNavigation에서 나타나는 현상이 있었음
+                    // 이를 아래와 같이 .apply{ anchorView } 로 바텀네비게이션뷰를 설정하면 snackBar가 그 위에 뜨게 됨!
+                    val bottomNavView: BottomNavigationView = activity?.findViewById(R.id.bottom_navigation)!!
+                    val snackBar = Snackbar.make(activity?.findViewById(R.id.main_content)!!,
+                        "현재 동네가 '${holder.location.text}'(으)로 변경되었습니다.", Snackbar.LENGTH_SHORT).apply {
+                        anchorView = bottomNavView
+                    }
+                    snackBar.setTextColor(Color.WHITE)
+                    snackBar.show()
+                    dismiss()
+                }
+            }
         }
 
     }

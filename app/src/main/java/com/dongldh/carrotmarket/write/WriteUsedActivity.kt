@@ -17,10 +17,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dongldh.carrotmarket.R
-import com.dongldh.carrotmarket.database.DataItem
-import com.dongldh.carrotmarket.database.FROM_SETTING_LOCATION
-import com.dongldh.carrotmarket.database.PICK_IMAGE_FROM_ALBUM
-import com.dongldh.carrotmarket.database.Permissions
+import com.dongldh.carrotmarket.database.*
 import com.dongldh.carrotmarket.dialog.WriteUsedCategoryDialog
 import com.dongldh.carrotmarket.setting.SettingLocationActivity
 import com.google.android.gms.tasks.OnCompleteListener
@@ -156,7 +153,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, SettingLocationActivity::class.java)
                 intent.putExtra("location", location)
                 intent.putExtra("locationNear", locationNear)
-                startActivityForResult(intent, FROM_SETTING_LOCATION)
+                startActivityForResult(intent, FROM_WRITE_TO_SETTING_LOCATION)
             }
 
             back_image -> finish()
@@ -183,7 +180,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             // 돌아오면 맨 아래 지역과 떨어진 거리정보 텍스트 변경된다
-            FROM_SETTING_LOCATION -> {
+            FROM_WRITE_TO_SETTING_LOCATION -> {
                 if(resultCode == Activity.RESULT_OK) {
                     locationNear = data?.getStringExtra("locationNear")
                     write_used_near_location_text.text = getString(R.string.write_used_near_location_text)
