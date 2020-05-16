@@ -200,3 +200,4 @@ https://www.youtube.com/watch?v=b0WUt3gfNCI
    툴바의 높이찾기 (https://gist.github.com/hamakn/8939eb68a920a6d7a498)
 4. 다이얼로그 외부 영역 투명하게 만들기 (https://altongmon.tistory.com/782)
 5. 스낵바 사용. 프래그먼트에서 사용시 바텀 네비게이션에 겹치는 현상 수정
+6. app:labelVisibilityMode="labeled" 를 사용하면, bottomNavigation이 항상 글자까지 보이도록 설정하는 효과 + 균등한 간격으로 item들이 배치되던데? ㅎㅎ
