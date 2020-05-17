@@ -5,10 +5,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +28,7 @@ import kotlinx.android.synthetic.main.item_change_location.view.*
 
 class ChangeLocationDialog: DialogFragment() {
     val list = mutableListOf<String>()
+    var nowLocation: String? = null
 
     // ? 왜 onStart() 처럼 메서드 구현하니 다이얼로그 위치가 내가 원하는대로 된거지?.. 뭐지?? ㅋㅋㅋㅋ
     // setBackgrondDrawableResource 메서드에 투명한 값을 집어넣어 다이얼로그를 깔끔하게 만들어준다. (실제로 외부 영역에 어두운 백그라운드가 존재한다)
@@ -49,6 +53,8 @@ class ChangeLocationDialog: DialogFragment() {
      *
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        nowLocation = arguments?.getString("nowLocation")   // 현재 지정된 위치 값 가져오기
+
         // 커스텀 다이얼로그 열면, 위에(top) 알 수 없는 여백이 생기는데, 이를 없애주는 코드는 아래와 같다.
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
@@ -97,7 +103,17 @@ class ChangeLocationDialog: DialogFragment() {
 
         override fun onBindViewHolder(holder: ChangeLocationViewHolder, position: Int) {
             val item = list[position]
-            holder.location.text = item
+            if(item == nowLocation) {
+                // fromHtml 함수는 N버전 이후로 deprecated 됐음. 분기 처리를 통해 구현 해주는걸로
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    holder.location.text = Html.fromHtml("<b>${item}</b>", Html.FROM_HTML_MODE_LEGACY)
+                } else {
+                    holder.location.text = Html.fromHtml("<b>${item}</b>")
+                }
+                holder.location.setTextColor(ContextCompat.getColor(activity?.applicationContext!!, android.R.color.black))
+            } else {
+                holder.location.text = item
+            }
 
             holder.location.setOnClickListener {
                 if(holder.location.text == "내 동네 설정") {
@@ -117,6 +133,9 @@ class ChangeLocationDialog: DialogFragment() {
                     }
                     snackBar.setTextColor(Color.WHITE)
                     snackBar.show()
+
+                    // 클릭하면 main_content의 화면이 설정한 지역에 맞춰 재설정 되도록 의도
+                    activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)!!.selectedItemId = R.id.action_home
                     dismiss()
                 }
             }

@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         getUserInfo()
         selected_location_layout.setOnClickListener(this)
         bottom_navigation.setOnNavigationItemSelectedListener(this)
-        bottom_navigation.selectedItemId = R.id.action_home
+
 
         // 만약 세션 유지 된 계정이 존재하지 않는다면 Dialog를 띄워서 로그인 / 회원가입을 권유한다.
         if(auth?.currentUser == null) showSuggestLoginDialog()
@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             selected_location_layout -> {
                 val changeLocationDialog = ChangeLocationDialog()
                 val bundle = Bundle()
+                bundle.putString("nowLocation", title_text.text.toString()) // 현재 설정되어 있는 Location의 글자를 bold처리 하기 위해 가져감
                 bundle.putStringArrayList("location", user.location)
                 changeLocationDialog.arguments = bundle
                 changeLocationDialog.show(supportFragmentManager, "dialog_fragment")
@@ -60,10 +61,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_home -> {
+                selected_location_layout.isClickable = true
                 nestedFragmentState = false
                 val homeFragment = HomeFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.main_content, homeFragment)
-                    .commit()
+                
+                // 아래의 bundle 계속 공통으로 들어가는데, 이것도 한 곳에다가 묶어야겠음
+                val bundle = Bundle()
+                bundle.putString("location", user.location[App.preference.nowSelected])
+                bundle.putString("locationNear", user.locationNear[App.preference.nowSelected].toString())
+                homeFragment.arguments = bundle
+                supportFragmentManager.beginTransaction().replace(R.id.main_content, homeFragment).commit()
 
                 // 프래그먼트간 이동에서 title_text의 값을 설정 할 필요가 있는 경우 다음과 같이 진행.
                 if(auth?.currentUser == null) {
@@ -85,6 +92,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager.beginTransaction().replace(R.id.main_content, categoryFragment).commit()
 
                 title_text.text = "카테고리"
+                selected_location_layout.isClickable = false
                 selected_location_image.visibility = View.GONE
                 search_image.visibility = View.VISIBLE
                 location_setting_image.visibility = View.GONE
@@ -117,6 +125,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         .replace(R.id.main_content, chatFragment).commit()
 
                     title_text.text = "채팅"
+                    selected_location_layout.isClickable = false
                     selected_location_image.visibility = View.GONE
                     search_image.visibility = View.GONE
                     location_setting_image.visibility = View.GONE
@@ -139,6 +148,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager.beginTransaction().replace(R.id.main_content, myCarrotFragment).commit()
 
                 title_text.text = "나의 당근"
+                selected_location_layout.isClickable = false
                 selected_location_image.visibility = View.GONE
                 search_image.visibility = View.GONE
                 location_setting_image.visibility = View.GONE
@@ -197,6 +207,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 // 기본적으로 title_text는 회원의 지역정보를 반영한다.
                 title_text.text = user.location[App.preference.nowSelected]
                 isLoading = false
+                bottom_navigation.selectedItemId = R.id.action_home
             }
         }
     }

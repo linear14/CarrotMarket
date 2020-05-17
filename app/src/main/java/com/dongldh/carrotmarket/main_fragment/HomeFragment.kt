@@ -1,6 +1,7 @@
 package com.dongldh.carrotmarket.main_fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
+import com.dongldh.carrotmarket.database.DBHelper
 import com.dongldh.carrotmarket.database.DataItem
 import com.dongldh.carrotmarket.nestedFragmentState
 import com.dongldh.carrotmarket.transaction.DetailFragment
@@ -22,8 +24,14 @@ class HomeFragment: Fragment() {
     val auth: FirebaseAuth? = FirebaseAuth.getInstance()
     val fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
+    var myLocation: String? = null
+    var myLocationNear: Int? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        myLocation = arguments?.getString("location")
+        myLocationNear = arguments?.getString("locationNear")?.toInt()
+
         view.main_recycler.layoutManager = LinearLayoutManager(activity)
         view.main_recycler.adapter = MainAdapter()
         return view
@@ -44,9 +52,14 @@ class HomeFragment: Fragment() {
                 if(firebaseFirestoreException != null) { return@addSnapshotListener }
                 itemList.clear()
 
+                // 가까운 동네 리스트를 받아와서, 동네 이름이 그 조건에 만족하는 항목만 가져온다.
+                val closeLocationList = findNearLocation(myLocation!!, myLocationNear!!)
+
                 for(snapshot in querySnapshot!!.documents) {
                     val item = snapshot?.toObject(DataItem::class.java)
-                    itemList.add(item!!)
+                    if(item!!.location in closeLocationList) {
+                        itemList.add(item)
+                    }
                 }
                 notifyDataSetChanged()
             }
@@ -114,5 +127,28 @@ class HomeFragment: Fragment() {
                 activity?.findViewById<View>(R.id.bottom_navigation)?.visibility = View.GONE
             }
         }
+    }
+
+    // 가까운 동네 리스트를 반환
+    fun findNearLocation(location: String, locationNear: Int): MutableList<String> {
+        val list = mutableListOf<String>()
+        val helper = DBHelper(activity?.applicationContext!!)
+        val db = helper.writableDatabase
+
+        val cursor = db.rawQuery("select * from location where name='${location}'", null)
+        cursor.moveToNext()
+
+        val row = cursor.getInt(2)
+        val col = cursor.getInt(3)
+
+        val newCursor = db.rawQuery("select * from location where abs(_row-$row) + abs(col-$col) <= $locationNear", null)
+        while(newCursor.moveToNext()) {
+            list.add(newCursor.getString(1))
+        }
+
+        db.close()
+        helper.close()
+
+        return list
     }
 }
