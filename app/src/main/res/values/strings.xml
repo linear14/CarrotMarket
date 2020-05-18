@@ -157,4 +157,9 @@
     <string name="setting_title"><b>설정</b></string>
     <string name="setting_sign_out">로그아웃</string>
 
+    <!-- fragment_category -->
+    <string name="category_used_transaction"><b>중고거래</b></string>
+    <string name="category_community_promotion"><b>동네홍보</b></string>
+    <string name="category_best_item">인기매물</string>
+
 </resources>
