@@ -153,6 +153,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, SettingLocationActivity::class.java)
                 intent.putExtra("location", location)
                 intent.putExtra("locationNear", locationNear)
+                intent.putExtra("requestCode", "WriteUsedActivity")
                 startActivityForResult(intent, FROM_WRITE_TO_SETTING_LOCATION)
             }
 

@@ -118,6 +118,14 @@ class ChangeLocationDialog: DialogFragment() {
             holder.location.setOnClickListener {
                 if(holder.location.text == "내 동네 설정") {
                     val intent = Intent(activity, SettingLocationActivity::class.java)
+                    intent.putExtra("requestCode", "ChangeLocationDialog")
+
+                    val location = arguments?.getStringArrayList("location")
+                    val locationNear = arguments?.getIntegerArrayList("locationNear")
+
+                    intent.putExtra("location", location!!)
+                    intent.putExtra("locationNear", locationNear!!)
+
                     startActivityForResult(intent, FROM_CHANGE_LOCATION_TO_SETTING_LOCATION)
                     dismiss()
                 } else {

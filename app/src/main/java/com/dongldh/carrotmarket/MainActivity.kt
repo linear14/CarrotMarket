@@ -1,5 +1,7 @@
 package com.dongldh.carrotmarket
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.dongldh.carrotmarket.database.DataUser
+import com.dongldh.carrotmarket.database.FROM_CHANGE_LOCATION_TO_SETTING_LOCATION
 import com.dongldh.carrotmarket.dialog.ChangeLocationDialog
 import com.dongldh.carrotmarket.dialog.SuggestLoginDialog
 import com.dongldh.carrotmarket.dialog.WriteBottomSheetDialog
@@ -26,7 +29,7 @@ var nestedFragmentState = false
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     var auth: FirebaseAuth? = FirebaseAuth.getInstance()
     val fireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    var isLoading = true // 처음 시작할 때 데이터를 받아오는 중인지를 확인
+    var isLoading = true // 처음 시작할 때 데이터를 받아오는 중인지를 확인 (데이터를 받아오는 중이라면, UI가 이상해지지 않도록 초기 설정을 몇몇 해줘야 함)
 
     val user = DataUser()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +54,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 val bundle = Bundle()
                 bundle.putString("nowLocation", title_text.text.toString()) // 현재 설정되어 있는 Location의 글자를 bold처리 하기 위해 가져감
                 bundle.putStringArrayList("location", user.location)
+                bundle.putIntegerArrayList("locationNear", user.locationNear)
                 changeLocationDialog.arguments = bundle
                 changeLocationDialog.show(supportFragmentManager, "dialog_fragment")
             }
@@ -161,6 +165,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return false
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode) {
+            FROM_CHANGE_LOCATION_TO_SETTING_LOCATION -> {
+                if(resultCode == Activity.RESULT_OK) {
+                    recreate()
+                }
+            }
+        }
+    }
+
     // 뒤로가기 버튼 눌렀을 경우
     var currentTime = System.currentTimeMillis()
     override fun onBackPressed() {
@@ -206,8 +222,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
                 // 기본적으로 title_text는 회원의 지역정보를 반영한다.
                 title_text.text = user.location[App.preference.nowSelected]
+
+                // 로딩중이라면 (즉, 처음 메인 화면에 들어오면), Fragment의 화면 설정을 여기서 해줘야 오류 안생김
+                // 만약, loading중인지 확인 안하고, 무턱대고 fragment를 action_home으로 바꾸면 예외가 발생하는데,
+                // 다른페이지에서 지역정보 설정을 바꾸면 이 콜백 메서드가 작동하기 때문이다.
+                // https://devvkkid.tistory.com/87 에서 힌트를 얻었음
+                if(isLoading) bottom_navigation.selectedItemId = R.id.action_home
                 isLoading = false
-                bottom_navigation.selectedItemId = R.id.action_home
+
             }
         }
     }
