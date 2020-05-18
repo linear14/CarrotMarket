@@ -1,6 +1,7 @@
 package com.dongldh.carrotmarket
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -111,10 +112,22 @@ class SelectLocationActivity : AppCompatActivity() {
 
             holder.location.text = item.name
             holder.itemView.setOnClickListener {
-                App.preference.location = item.name
-                val intent = Intent(this@SelectLocationActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                if(intent.getStringExtra("requestCode") == "SettingLocationActivity") {
+                    if(intent.getStringExtra("firstLocation") == item.name) {
+                        Toast.makeText(this@SelectLocationActivity, "이미 등록된 주소입니다. 다시 선택하세요", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // 원하는 값 받아서 다시 돌아가자
+                        val intent = Intent()
+                        intent.putExtra("newLocation", item.name)
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
+                } else {
+                    App.preference.location = item.name
+                    val intent = Intent(this@SelectLocationActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }

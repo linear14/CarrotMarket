@@ -7,8 +7,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.dongldh.carrotmarket.App
 import com.dongldh.carrotmarket.R
+import com.dongldh.carrotmarket.SelectLocationActivity
+import com.dongldh.carrotmarket.database.FROM_SETTING_LOCATION_TO_SELECT_LOCATION
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_setting_location.*
@@ -16,6 +19,11 @@ import kotlinx.android.synthetic.main.activity_setting_location.*
 class SettingLocationActivity : AppCompatActivity() {
     val auth = FirebaseAuth.getInstance()
     val fireStore = FirebaseFirestore.getInstance()
+    lateinit var locationList: ArrayList<String>
+    lateinit var locationNearList: ArrayList<Int>
+
+    // 현재 선택되어있는 인덱스.. 이 인덱스를 조작한 뒤, 최종적으로 backButton 을 누를 때 sharedPreference 로 등록하자
+    var nowSelected = App.preference.nowSelected
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,36 +34,23 @@ class SettingLocationActivity : AppCompatActivity() {
             title_text.text = getString(R.string.location_setting_toolbar)
             location_setting_layout.visibility = View.VISIBLE
 
-            makeSelectedBackground()
-            val locationList = intent.getStringArrayListExtra("location")!!
-            val locationNearList = intent.getIntegerArrayListExtra("locationNear")!!
+            // 최초 한 번 받아오자
+            locationList = intent.getStringArrayListExtra("location")!!
+            locationNearList = intent.getIntegerArrayListExtra("locationNear")!!
 
-            // 내 동네 정보를 각 뷰에다가 보여지도록 설정함 (locationList의 사이즈에 따라 갯수가 결정됨)
-            location_select_button1.text = locationList[0]
-            if(locationList.size == 2) {
-                location_select_button2.text = locationList[1]
-                location_add_image.visibility = View.GONE
-                location_delete_image2.visibility = View.VISIBLE
-            } else {
-                location_select_button2.text = null
-                location_add_image.visibility = View.VISIBLE
-                location_delete_image2.visibility = View.GONE
-            }
-
-            setNearLocationText(locationList[App.preference.nowSelected], locationNearList[App.preference.nowSelected])
-            seekBarStatus(locationNearList[App.preference.nowSelected])
+            init()
 
             // seekBar의 값에 따라 이미지 + 텍스트 등의 값을 변화시킨다.
             seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    locationNearList[App.preference.nowSelected] = progress
+                    locationNearList[nowSelected] = progress
                     when(progress) {
                         0 -> location_setting_image.setImageResource(R.drawable.location_0)
                         1 -> location_setting_image.setImageResource(R.drawable.location_1)
                         2 -> location_setting_image.setImageResource(R.drawable.location_2)
                         3 -> location_setting_image.setImageResource(R.drawable.location_3)
                     }
-                    setNearLocationText(locationList[App.preference.nowSelected], locationNearList[App.preference.nowSelected])
+                    setNearLocationText(locationList[nowSelected], locationNearList[nowSelected])
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -65,20 +60,37 @@ class SettingLocationActivity : AppCompatActivity() {
             // 리사이클러뷰로 구현한게 아니라서, 각 버튼마다 이렇게 처리를 해줘야함..
             // 뭔가 하드코딩 느낌이 나는데.. 데이터 이동에 관련된 공부를 어떻게 해야할 지..
             location_select_button1.setOnClickListener {
-                App.preference.nowSelected = 0
+                nowSelected = 0
                 makeSelectedBackground()
-                setNearLocationText(locationList[App.preference.nowSelected], locationNearList[App.preference.nowSelected])
-                seekBarStatus(locationNearList[App.preference.nowSelected])
+                setNearLocationText(locationList[nowSelected], locationNearList[nowSelected])
+                seekBarStatus(locationNearList[nowSelected])
             }
 
             location_select_button2.setOnClickListener {
-                App.preference.nowSelected = 1
-                makeSelectedBackground()
-                setNearLocationText(locationList[App.preference.nowSelected], locationNearList[App.preference.nowSelected])
-                seekBarStatus(locationNearList[App.preference.nowSelected])
+                if(locationList.size == 1) {
+                    val intent = Intent(this, SelectLocationActivity::class.java)
+                    intent.putExtra("firstLocation", locationList[0])
+                    intent.putExtra("requestCode", "SettingLocationActivity")
+                    startActivityForResult(intent, FROM_SETTING_LOCATION_TO_SELECT_LOCATION)
+                } else {
+                    nowSelected = 1
+                    makeSelectedBackground()
+                    setNearLocationText(locationList[nowSelected], locationNearList[nowSelected])
+                    seekBarStatus(locationNearList[nowSelected])
+                }
+            }
+
+            location_delete_image1.setOnClickListener {
+                makeDeleteDialog(0)
+            }
+
+            location_delete_image2.setOnClickListener {
+                makeDeleteDialog(1)
             }
 
             back_image.setOnClickListener {
+                App.preference.nowSelected = nowSelected
+                App.preference.location = locationList[nowSelected]
                 val uid = auth.currentUser!!.uid
                 fireStore.collection("users").document(uid).update("locationNear", locationNearList)
                 fireStore.collection("users").document(uid).update("location", locationList)
@@ -87,10 +99,8 @@ class SettingLocationActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }
-
         }
-
-
+        
         else if(previousScreen == "WriteUsedActivity") {
             title_text.text = getString(R.string.select_location_area_toolbar)
             location_setting_layout.visibility = View.GONE
@@ -126,7 +136,7 @@ class SettingLocationActivity : AppCompatActivity() {
                 val uid = auth.currentUser!!.uid
                 fireStore.collection("users").document(uid).get().addOnSuccessListener {
                     val locationNearList = it["locationNear"] as ArrayList<Long?>
-                    locationNearList[App.preference.nowSelected] = locationNear.toLong()
+                    locationNearList[nowSelected] = locationNear.toLong()
                     fireStore.collection("users").document(uid).update("locationNear", locationNearList)
                 }
 
@@ -134,6 +144,18 @@ class SettingLocationActivity : AppCompatActivity() {
                 intent.putExtra("locationNear", locationNear.toString())
                 setResult(Activity.RESULT_OK, intent)
                 finish()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == FROM_SETTING_LOCATION_TO_SELECT_LOCATION) {
+            if(resultCode == Activity.RESULT_OK) {
+                locationList.add(data?.getStringExtra("newLocation")!!)
+                locationNearList.add(1)
+                init()
             }
         }
     }
@@ -147,7 +169,7 @@ class SettingLocationActivity : AppCompatActivity() {
 
     // 선택된 지역에 따라 백그라운드를 바꿔주는 메서드
     fun makeSelectedBackground() {
-        if(App.preference.nowSelected == 0) {
+        if(nowSelected == 0) {
             location_select_layout1.setBackgroundResource(R.drawable.decorate_button_active)
             location_select_layout2.setBackgroundResource(R.drawable.decorate_button_inactive)
         } else {
@@ -165,5 +187,75 @@ class SettingLocationActivity : AppCompatActivity() {
             2 -> location_setting_image.setImageResource(R.drawable.location_2)
             3 -> location_setting_image.setImageResource(R.drawable.location_3)
         }
+    }
+
+    // 다이얼로그 만들기
+    fun makeDeleteDialog(position: Int) {
+        // 만약 locationList의 사이즈가 1이면 -> 동네 설정 액티비티로 이동할 수 있도록 유도
+        if(locationList.size == 1) {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("동네는 최소 1개이상 선택되어 있어야 합니다. 현재 설정된 동네를 변경하시겠어요?")
+
+            builder.setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            builder.setPositiveButton("네, 변경할게요") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+        } else {    // locationList의 사이즈가 2라면? -> 삭제할건지 말건지 정하는 다이얼로그 띄워주기
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("선택한 지역을 삭제하시겠습니까?")
+
+            builder.setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            // 삭제 하겠냐고 물어봤을 때 확인 버튼을 누른다? -> 데이터 처리 및 UI변경
+            builder.setPositiveButton("확인") { dialog, which ->
+                if(position == 0) {
+                    val tempLocation = locationList[1]
+                    val tempLocationNear = locationNearList[1]
+
+                    locationList.removeAt(position)
+                    locationNearList.removeAt(position)
+
+                    locationList[0] = tempLocation
+                    locationNearList[0] = tempLocationNear
+                } else {
+                    locationList.removeAt(position)
+                    locationNearList.removeAt(position)
+                }
+                nowSelected = 0
+                init()
+                dialog.dismiss()
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+
+    // 버튼 텍스트, 이미지, 배경등 초기 설정
+    private fun init() {
+        makeSelectedBackground()
+        
+        // 내 동네 정보를 각 뷰에다가 보여지도록 설정함 (locationList의 사이즈에 따라 갯수가 결정됨)
+        location_select_button1.text = locationList[0]
+        if(locationList.size == 2) {
+            location_select_button2.text = locationList[1]
+            location_add_image.visibility = View.GONE
+            location_delete_image2.visibility = View.VISIBLE
+        } else {
+            location_select_button2.text = null
+            location_add_image.visibility = View.VISIBLE
+            location_delete_image2.visibility = View.GONE
+        }
+
+        setNearLocationText(locationList[nowSelected], locationNearList[nowSelected])
+        seekBarStatus(locationNearList[nowSelected])
     }
 }

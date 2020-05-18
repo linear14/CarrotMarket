@@ -24,6 +24,7 @@ class StartActivity : AppCompatActivity() {
 
             select_location_button.setOnClickListener {
                 val intent = Intent(this@StartActivity, SelectLocationActivity::class.java)
+                intent.putExtra("requestCode", "StartActivity")
                 startActivity(intent)
                 finish()
             }
