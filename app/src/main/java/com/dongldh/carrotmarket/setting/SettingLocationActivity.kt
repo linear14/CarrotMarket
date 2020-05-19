@@ -92,12 +92,13 @@ class SettingLocationActivity : AppCompatActivity() {
                 App.preference.nowSelected = nowSelected
                 App.preference.location = locationList[nowSelected]
                 val uid = auth.currentUser!!.uid
-                fireStore.collection("users").document(uid).update("locationNear", locationNearList)
-                fireStore.collection("users").document(uid).update("location", locationList)
-
-                val intent = Intent()
-                setResult(Activity.RESULT_OK, intent)
-                finish()
+                fireStore.collection("users").document(uid).update("locationNear", locationNearList).addOnCompleteListener {
+                    fireStore.collection("users").document(uid).update("location", locationList).addOnCompleteListener {
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
+                }
             }
         }
         

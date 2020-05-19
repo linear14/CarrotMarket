@@ -126,7 +126,7 @@ class ChangeLocationDialog: DialogFragment() {
                     intent.putExtra("location", location!!)
                     intent.putExtra("locationNear", locationNear!!)
 
-                    startActivityForResult(intent, FROM_CHANGE_LOCATION_TO_SETTING_LOCATION)
+                    activity?.startActivityForResult(intent, FROM_CHANGE_LOCATION_TO_SETTING_LOCATION)
                     dismiss()
                 } else {
                     activity?.findViewById<TextView>(R.id.title_text)?.text = holder.location.text.toString()
