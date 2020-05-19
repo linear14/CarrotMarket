@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dongldh.carrotmarket.CircleProgressDialog
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.*
 import com.dongldh.carrotmarket.dialog.WriteUsedCategoryDialog
@@ -47,6 +48,8 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
 
     var isPossibleSuggestion = true // 가격 제안 가능?
     var counter = 0 // 업로드 성공, 혹은 실패 처리 된 이미지의 수를 카운팅.
+
+    var progressDialog: CircleProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -207,6 +210,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
             write_used_price_input.text.toString().toInt() > 2000000000 -> Toast.makeText(this, "20억 이하의 가격을 입력해주세요", Toast.LENGTH_SHORT).show()
 
             else -> {
+                progressDialog = CircleProgressDialog(this)
                 val uid = auth?.currentUser!!.uid
 
                 // 이미지가 등록되어 있다면 이미지 포함하여 저장. 그렇지 않으면(else) 정보만 저장
@@ -225,6 +229,7 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                                     if(task2.isSuccessful) {
                                         firebasePhotoUriList.add(task2.result.toString())
                                     } else {
+                                        progressDialog!!.dismiss()
                                         // 만약 이미지는 저장이 됐지만 서버 오류등으로 이미지 url을 가져오지 못했다면, 이미지 삭제 및 토스트 메세지 띄움
                                         storageReference.child("itemImages").child(imageFileName).delete()
                                         Toast.makeText(this@WriteUsedActivity, "일부 사진을 저장할 수 없습니다.", Toast.LENGTH_SHORT).show()
@@ -234,9 +239,13 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
                                     }
                                 }
                             } else {
+                                progressDialog!!.dismiss()
                                 Toast.makeText(this@WriteUsedActivity, "일부 사진을 업로드할 수 없습니다.", Toast.LENGTH_SHORT).show()
                                 counter++
                             }
+                        }?.addOnFailureListener {
+                            progressDialog!!.dismiss()
+                            Toast.makeText(this@WriteUsedActivity, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else saveImageToFireStore()
@@ -272,12 +281,18 @@ class WriteUsedActivity : AppCompatActivity(), View.OnClickListener {
             fireStore!!.collection("UsedItems").document().set(item)
                 .addOnSuccessListener {
                     Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                    progressDialog!!.dismiss()
+                    finish()
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "게시글 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                    progressDialog!!.dismiss()
+                    finish()
                 }
-
+        }.addOnFailureListener {
+            progressDialog!!.dismiss()
             finish()
+            Toast.makeText(this, "유저 정보에 접근을 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 }

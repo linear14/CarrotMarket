@@ -28,6 +28,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
     var phoneNumber: String? = null
     var profileImage: String? = null
 
+    var progressDialog: CircleProgressDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -55,6 +57,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                 val email = "${phoneNumber!!}@test.com"
                 val password = "123456"
 
+                progressDialog = CircleProgressDialog(this)
                 // 신규 계정 생성
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                     // 회원가입 성공
@@ -72,12 +75,14 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                                             profileImage = task3.result.toString()
                                             saveUserInfoToFIreStoreAndLogin(uid, email, password)
                                         } else {
+                                            progressDialog!!.dismiss()
                                             // 만약 이미지는 저장이 됐지만 서버 오류등으로 이미지 url을 가져오지 못했다면, 이미지 삭제 및 토스트 메세지 띄움
                                             storageReference.child("userImages").child(imageFileName).delete()
                                             Toast.makeText(this, "프로필 사진을 저장할 수 없습니다.", Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 } else {
+                                    progressDialog!!.dismiss()
                                     Toast.makeText(this, "프로필 사진을 저장할 수 없습니다.", Toast.LENGTH_SHORT).show()
                                 }
                             }
@@ -85,6 +90,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                             saveUserInfoToFIreStoreAndLogin(uid, email, password)
                         }
                     } else {
+                        progressDialog!!.dismiss()
                         // 회원가입 실패
                         Log.d("FirebaseAuth", "onComplete" + task.exception!!.message)
                         Toast.makeText(this, "회원가입 실패...", Toast.LENGTH_SHORT).show()
@@ -116,6 +122,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
         val userName = nickname_input.text.toString()
         val location = App.preference.location!!
         val dataUser = DataUser(phone, userName, arrayListOf(location), profileImage?:"default")
+        App.preference.nowSelected = 0
 
         // Log.d("profile", "uid: $uid, phone: $phone")
         fireStore.collection("users").document(uid).set(dataUser)
@@ -129,6 +136,10 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
                 finish()
+                progressDialog!!.dismiss()
+            } else {
+                Toast.makeText(this, "접속 오류!", Toast.LENGTH_SHORT).show()
+                progressDialog!!.dismiss()
             }
         }
     }

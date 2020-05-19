@@ -88,8 +88,10 @@ class SignActivity : AppCompatActivity(), View.OnClickListener {
                         val email = "${phoneNumber}@test.com"
                         val password = "123456"
 
+                        val progressDialog = CircleProgressDialog(this)
                         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
                             if(task.isSuccessful) {
+                                progressDialog.dismiss()
                                 // 로그인이 성공한 경우(이미 핸드폰 번호가 존재하는 경우) -> 정상적으로 MainActivity로 이동
                                 Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@SignActivity, MainActivity::class.java)
@@ -97,6 +99,7 @@ class SignActivity : AppCompatActivity(), View.OnClickListener {
                                 startActivity(intent)
                                 finish()
                             } else {
+                                progressDialog.dismiss()
                                 // 회원가입이 되어있지 않은 경우(등록되지 않은 핸드폰 번호) -> ProfileActivity로 이동해서 닉네임 설정하자.
                                 Toast.makeText(this, "회원 등록 창으로 이동합니다.", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@SignActivity, ProfileActivity::class.java)

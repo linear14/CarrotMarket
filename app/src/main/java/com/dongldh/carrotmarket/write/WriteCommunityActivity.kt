@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dongldh.carrotmarket.CircleProgressDialog
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataItem
 import com.dongldh.carrotmarket.database.PICK_IMAGE_FROM_ALBUM
@@ -41,6 +42,8 @@ class WriteCommunityActivity : AppCompatActivity(), View.OnClickListener {
 
     var isPossibleChat = true   // 번호 입력 시 채팅 가능 여부 설정
     var counter = 0 // 업로드 성공, 혹은 실패 처리 된 이미지의 수를 카운팅.
+
+    var progressDialog: CircleProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,6 +209,7 @@ class WriteCommunityActivity : AppCompatActivity(), View.OnClickListener {
             ).show()
 
             else -> {
+                progressDialog = CircleProgressDialog(this)
                 val uid = auth?.currentUser!!.uid
 
                 // 이미지가 등록되어 있다면 이미지 포함하여 저장. 그렇지 않으면(else) 정보만 저장
@@ -226,6 +230,7 @@ class WriteCommunityActivity : AppCompatActivity(), View.OnClickListener {
                                         if (task2.isSuccessful) {
                                             firebasePhotoUriList.add(task2.result.toString())
                                         } else {
+                                            progressDialog!!.dismiss()
                                             // 만약 이미지는 저장이 됐지만 서버 오류등으로 이미지 url을 가져오지 못했다면, 이미지 삭제 및 토스트 메세지 띄움
                                             storageReference.child("itemImages")
                                                 .child(imageFileName).delete()
@@ -240,13 +245,13 @@ class WriteCommunityActivity : AppCompatActivity(), View.OnClickListener {
                                         }
                                     }
                                 } else {
-                                    Toast.makeText(
-                                        this@WriteCommunityActivity,
-                                        "일부 사진을 업로드할 수 없습니다.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    progressDialog!!.dismiss()
+                                    Toast.makeText(this@WriteCommunityActivity, "일부 사진을 업로드할 수 없습니다.", Toast.LENGTH_SHORT).show()
                                     counter++
                                 }
+                            }?.addOnFailureListener {
+                                progressDialog!!.dismiss()
+                                Toast.makeText(this@WriteCommunityActivity, "오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
                             }
                     }
                 } else saveImageToFireStore()
@@ -283,12 +288,18 @@ class WriteCommunityActivity : AppCompatActivity(), View.OnClickListener {
             fireStore!!.collection("UsedItems").document().set(item)
                 .addOnSuccessListener {
                     Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                    progressDialog!!.dismiss()
+                    finish()
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "게시글 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                    progressDialog!!.dismiss()
+                    finish()
                 }
-
+        }.addOnFailureListener {
+            progressDialog!!.dismiss()
             finish()
+            Toast.makeText(this, "유저 정보에 접근을 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 }

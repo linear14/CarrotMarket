@@ -8,9 +8,7 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.dongldh.carrotmarket.App
-import com.dongldh.carrotmarket.R
-import com.dongldh.carrotmarket.SelectLocationActivity
+import com.dongldh.carrotmarket.*
 import com.dongldh.carrotmarket.database.FROM_SETTING_LOCATION_TO_SELECT_LOCATION
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -89,6 +87,9 @@ class SettingLocationActivity : AppCompatActivity() {
             }
 
             back_image.setOnClickListener {
+                // progressBar 생성
+                val progressDialog = CircleProgressDialog(this)
+
                 App.preference.nowSelected = nowSelected
                 App.preference.location = locationList[nowSelected]
                 val uid = auth.currentUser!!.uid
@@ -97,7 +98,11 @@ class SettingLocationActivity : AppCompatActivity() {
                         val intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         finish()
+                        progressDialog.dismiss()    // progressBar 종료
                     }
+                }.addOnFailureListener {
+                    progressDialog.dismiss()
+                    Toast.makeText(this, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -134,17 +139,22 @@ class SettingLocationActivity : AppCompatActivity() {
             // 여기서 firestore의 데이터를 바꾸주면.. MainActivity에서의 getUserInfo안의 callback이 작동하므로
             // 특별한 조작을 하지 않아도 MainActivity에서의 DataUser의 정보가 바뀌는 아주 편리한 상황이 생긴다.
             back_image.setOnClickListener {
+                val progressDialog = CircleProgressDialog(this)
                 val uid = auth.currentUser!!.uid
                 fireStore.collection("users").document(uid).get().addOnSuccessListener {
                     val locationNearList = it["locationNear"] as ArrayList<Long?>
                     locationNearList[nowSelected] = locationNear.toLong()
                     fireStore.collection("users").document(uid).update("locationNear", locationNearList)
-                }
 
-                val intent = Intent()
-                intent.putExtra("locationNear", locationNear.toString())
-                setResult(Activity.RESULT_OK, intent)
-                finish()
+                    val intent = Intent()
+                    intent.putExtra("locationNear", locationNear.toString())
+                    setResult(Activity.RESULT_OK, intent)
+                    finish()
+                    progressDialog.dismiss()
+                }.addOnFailureListener {
+                    progressDialog.dismiss()
+                    Toast.makeText(this, "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

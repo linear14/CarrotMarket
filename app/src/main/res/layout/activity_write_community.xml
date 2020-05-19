@@ -222,7 +222,8 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/write_community_phone_input"
                     android:inputType="phone"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:maxLength="11"/>
 
 
                 <LinearLayout

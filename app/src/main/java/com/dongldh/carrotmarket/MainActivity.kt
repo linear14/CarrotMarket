@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import com.dongldh.carrotmarket.database.DataUser
 import com.dongldh.carrotmarket.database.FROM_CHANGE_LOCATION_TO_SETTING_LOCATION
 import com.dongldh.carrotmarket.dialog.ChangeLocationDialog
@@ -18,11 +17,11 @@ import com.dongldh.carrotmarket.main_fragment.CategoryFragment
 import com.dongldh.carrotmarket.main_fragment.ChatFragment
 import com.dongldh.carrotmarket.main_fragment.HomeFragment
 import com.dongldh.carrotmarket.main_fragment.MyCarrotFragment
+import com.google.android.gms.maps.model.Circle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_my_carrot.view.*
 
 // fragment가 중첩되어 있는 상태일 경우 true 부여. true인 상태에서는 뒤로가는 버튼 누를 경우 이전 프래그먼트로 돌아가야함
 var nestedFragmentState = false
@@ -202,6 +201,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private fun getUserInfo() {
         val uid = auth?.currentUser?.uid
         if(uid != null) {
+            val progressDialog = CircleProgressDialog(this)
             fireStore.collection("users").document(uid).addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
                 // 데이터가 변경 될 때마다 SnapshotListener가 동작하므로, 오류 발생할 경우를 return으로 잡아줘야함
                 // 로그아웃 시 여기서 오류가 발생해서 우선은 이렇게 처리를 했는데, 또 다른 경우에서 오류가 발생한다면?
@@ -229,7 +229,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 // https://devvkkid.tistory.com/87 에서 힌트를 얻었음
                 if(isLoading) bottom_navigation.selectedItemId = R.id.action_home
                 isLoading = false
-
+                progressDialog.dismiss()
             }
         }
     }
