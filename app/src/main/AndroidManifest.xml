@@ -17,9 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".setting.SettingCategoryActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
-        <activity android:name=".setting.SettingLocationActivity"></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".setting.SettingLocationActivity" />
         <activity android:name=".write.WriteUsedActivity" />
         <activity android:name=".write.WriteCommunityActivity" />
         <activity android:name=".setting.SettingMainActivity" />
@@ -40,11 +45,7 @@
             android:name=".SelectLocationActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".StartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".SignActivity" />
         <activity android:name=".MainActivity" />

@@ -14,7 +14,8 @@
         android:background="#A1E8F1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/location_auth_device_text"

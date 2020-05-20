@@ -162,4 +162,9 @@
     <string name="category_community_promotion"><b>동네홍보</b></string>
     <string name="category_best_item">인기매물</string>
 
+    <!-- SettingCategoryActivity -->
+    <string name="category_setting_title_text"><b>관심 카테고리 설정</b></string>
+    <string name="category_setting_content_text">홈 화면에서 보고 싶지 않은 카테고리는\n체크를 해제하세요</string>
+    <string name="category_setting_description_text">최소 1개 이상 선택되어 있어야 합니다.</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.dongldh.carrotmarket.main_fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +28,8 @@ class HomeFragment: Fragment() {
     var myLocation: String? = null
     var myLocationNear: Int? = null
 
+    var helper: DBHelper? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         myLocation = arguments?.getString("location")
@@ -35,6 +38,11 @@ class HomeFragment: Fragment() {
         view.main_recycler.layoutManager = LinearLayoutManager(activity)
         view.main_recycler.adapter = MainAdapter()
         return view
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        helper = DBHelper(context)
     }
 
     class MainViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -132,8 +140,7 @@ class HomeFragment: Fragment() {
     // 가까운 동네 리스트를 반환
     fun findNearLocation(location: String, locationNear: Int): MutableList<String> {
         val list = mutableListOf<String>()
-        val helper = DBHelper(activity?.applicationContext!!)
-        val db = helper.writableDatabase
+        val db = helper!!.writableDatabase
 
         val cursor = db.rawQuery("select * from location where name='${location}'", null)
         cursor.moveToNext()
@@ -147,7 +154,7 @@ class HomeFragment: Fragment() {
         }
 
         db.close()
-        helper.close()
+        helper!!.close()
 
         return list
     }
