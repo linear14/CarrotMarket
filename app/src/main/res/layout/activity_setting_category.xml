@@ -77,8 +77,16 @@
             android:gravity="center"
             android:textColor="@color/colorDarkText"/>
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_setting_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category_setting_layout1"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/category_setting_layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -463,7 +471,7 @@
                 android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 

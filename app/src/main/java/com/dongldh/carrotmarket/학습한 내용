@@ -204,3 +204,6 @@ https://www.youtube.com/watch?v=b0WUt3gfNCI
 
 20.05.20 수
 1. 프래그먼트에서 context 처리 // https://stackoverflow.com/questions/8215308/using-context-in-a-fragment
+
+20.05.21 목
+1. arraylist를 sharedPreference로 저장

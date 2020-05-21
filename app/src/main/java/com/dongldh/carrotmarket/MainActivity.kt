@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import com.dongldh.carrotmarket.database.DataUser
 import com.dongldh.carrotmarket.database.FROM_CHANGE_LOCATION_TO_SETTING_LOCATION
+import com.dongldh.carrotmarket.database.FROM_MAIN_TO_SETTING_CATEGORY
 import com.dongldh.carrotmarket.dialog.ChangeLocationDialog
 import com.dongldh.carrotmarket.dialog.SuggestLoginDialog
 import com.dongldh.carrotmarket.dialog.WriteBottomSheetDialog
@@ -17,6 +18,7 @@ import com.dongldh.carrotmarket.main_fragment.CategoryFragment
 import com.dongldh.carrotmarket.main_fragment.ChatFragment
 import com.dongldh.carrotmarket.main_fragment.HomeFragment
 import com.dongldh.carrotmarket.main_fragment.MyCarrotFragment
+import com.dongldh.carrotmarket.setting.SettingCategoryActivity
 import com.google.android.gms.maps.model.Circle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         getUserInfo()
         selected_location_layout.setOnClickListener(this)
+        location_setting_image.setOnClickListener(this)
         bottom_navigation.setOnNavigationItemSelectedListener(this)
 
 
@@ -56,6 +59,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 bundle.putIntegerArrayList("locationNear", user.locationNear)
                 changeLocationDialog.arguments = bundle
                 changeLocationDialog.show(supportFragmentManager, "dialog_fragment")
+            }
+
+            location_setting_image -> {
+                val intent = Intent(this@MainActivity, SettingCategoryActivity::class.java)
+                startActivityForResult(intent, FROM_MAIN_TO_SETTING_CATEGORY)
             }
         }
     }
@@ -169,6 +177,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         when(requestCode) {
             FROM_CHANGE_LOCATION_TO_SETTING_LOCATION -> {
+                if(resultCode == Activity.RESULT_OK) {
+                    recreate()
+                }
+            }
+
+            FROM_MAIN_TO_SETTING_CATEGORY -> {
                 if(resultCode == Activity.RESULT_OK) {
                     recreate()
                 }
