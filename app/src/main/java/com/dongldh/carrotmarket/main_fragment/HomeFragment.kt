@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dongldh.carrotmarket.App
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DBHelper
 import com.dongldh.carrotmarket.database.DataItem
@@ -65,7 +66,7 @@ class HomeFragment: Fragment() {
 
                 for(snapshot in querySnapshot!!.documents) {
                     val item = snapshot?.toObject(DataItem::class.java)
-                    if(item!!.location in closeLocationList) {
+                    if(item!!.location in closeLocationList && item.category !in App.preference.notSelectedCategory) {
                         itemList.add(item)
                     }
                 }
