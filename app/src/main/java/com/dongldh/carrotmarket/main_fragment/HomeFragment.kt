@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.App
 import com.dongldh.carrotmarket.R
@@ -19,6 +20,7 @@ import com.dongldh.carrotmarket.transaction.DetailFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.item_uploaded_item.view.*
 
@@ -38,6 +40,7 @@ class HomeFragment: Fragment() {
 
         view.main_recycler.layoutManager = LinearLayoutManager(activity)
         view.main_recycler.adapter = MainAdapter()
+        view.swipe_refresh.setOnRefreshListener{ view.main_recycler.adapter = MainAdapter() }
         return view
     }
 
@@ -71,6 +74,7 @@ class HomeFragment: Fragment() {
                     }
                 }
                 notifyDataSetChanged()
+                if(swipe_refresh.isRefreshing) swipe_refresh.isRefreshing = false
             }
         }
 
@@ -159,4 +163,6 @@ class HomeFragment: Fragment() {
 
         return list
     }
+
+
 }

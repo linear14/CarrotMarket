@@ -46,4 +46,5 @@ dependencies {
     implementation 'com.github.ParkSangGwon:TedPermission:v1.0.11'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.xw.repo:bubbleseekbar:3.20-lite'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 }
