@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -17,14 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dongldh.carrotmarket.App
 import com.dongldh.carrotmarket.R
-import com.dongldh.carrotmarket.SignActivity
 import com.dongldh.carrotmarket.database.FROM_CHANGE_LOCATION_TO_SETTING_LOCATION
 import com.dongldh.carrotmarket.setting.SettingLocationActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_change_location.view.*
-import kotlinx.android.synthetic.main.item_change_location.view.*
+import kotlinx.android.synthetic.main.item_default_textview.view.*
 
 class ChangeLocationDialog: DialogFragment() {
     val list = mutableListOf<String>()
@@ -94,7 +90,7 @@ class ChangeLocationDialog: DialogFragment() {
     inner class ChangeLocationAdapter(list: MutableList<String>): RecyclerView.Adapter<ChangeLocationViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChangeLocationViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            return ChangeLocationViewHolder(layoutInflater.inflate(R.layout.item_change_location, parent, false))
+            return ChangeLocationViewHolder(layoutInflater.inflate(R.layout.item_default_textview, parent, false))
         }
 
         override fun getItemCount(): Int {

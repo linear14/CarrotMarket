@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 
                 // 아래의 bundle 계속 공통으로 들어가는데, 이것도 한 곳에다가 묶어야겠음
                 val bundle = Bundle()
+                bundle.putString("nowUserName", user.userName)
                 bundle.putString("location", user.location[App.preference.nowSelected])
                 bundle.putString("locationNear", user.locationNear[App.preference.nowSelected].toString())
                 homeFragment.arguments = bundle

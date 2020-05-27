@@ -120,6 +120,7 @@ class HomeFragment: Fragment() {
                 val fragment = DetailFragment()
                 val bundle = Bundle()
 
+                bundle.putString("nowUserName", arguments?.getString("nowUserName"))
                 bundle.putString("title", item.title)
                 bundle.putString("userName", item.userName)
                 bundle.putString("location", item.location)

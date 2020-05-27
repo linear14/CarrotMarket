@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.dongldh.carrotmarket.R
 import com.dongldh.carrotmarket.database.DataUser
+import com.dongldh.carrotmarket.dialog.DetailMoreDialog
 import com.dongldh.carrotmarket.nestedFragmentState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -95,6 +98,7 @@ class DetailFragment: Fragment(), View.OnClickListener {
         }
 
         view.detail_back_image.setOnClickListener(this)
+        view.detail_more_image.setOnClickListener(this)
 
         return view
     }
@@ -105,6 +109,15 @@ class DetailFragment: Fragment(), View.OnClickListener {
                 nestedFragmentState = false
                 activity?.findViewById<View>(R.id.detail_content)?.visibility = View.GONE
                 activity?.findViewById<View>(R.id.bottom_navigation)?.visibility = View.VISIBLE
+            }
+
+            detail_more_image -> {
+                val dialogFragment = DetailMoreDialog()
+                val bundle = Bundle()
+                bundle.putString("nowUserName", arguments?.getString("nowUserName"))
+                bundle.putString("uploadUserName", arguments?.getString("userName"))
+                dialogFragment.arguments = bundle
+                dialogFragment.show(activity?.supportFragmentManager!!, "dialog_fragment")
             }
         }
     }
